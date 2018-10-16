@@ -13,12 +13,23 @@ class ChatMessageCell: UITableViewCell {
     let messageLabel = UILabel()
     let bubbleBackgroundView = UIView()
     
+    var leadingConstraint : NSLayoutConstraint!
+    var trailingConstraint : NSLayoutConstraint!
+    
     var chatMessage: ChatMessage! {
         didSet{
             bubbleBackgroundView.backgroundColor = chatMessage.isIncoming ? .white : .purple
             messageLabel.textColor = chatMessage.isIncoming ? .black : .white
             
             messageLabel.text = chatMessage.text
+            
+            if chatMessage.isIncoming {
+                leadingConstraint.isActive = true
+                trailingConstraint.isActive = false
+            } else {
+                leadingConstraint.isActive = false
+                trailingConstraint.isActive = true
+            }
         }
     }
 
@@ -40,8 +51,8 @@ class ChatMessageCell: UITableViewCell {
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         // Set up constrains
-        let constraints = [messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 27),
+        let constraints = [
+            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -27),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
             
@@ -52,7 +63,15 @@ class ChatMessageCell: UITableViewCell {
             ]
         
         NSLayoutConstraint.activate(constraints)
+        
+        
+        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 27)
+        leadingConstraint.isActive = false
+        
+        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27)
+        trailingConstraint.isActive = true
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
