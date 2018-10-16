@@ -8,20 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		D9ADEFE82175391500EF2E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE72175391500EF2E2D /* AppDelegate.swift */; };
-		D9ADEFEA2175391500EF2E2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE92175391500EF2E2D /* ViewController.swift */; };
+		D9ADEFEA2175391500EF2E2D /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE92175391500EF2E2D /* MessagesViewController.swift */; };
 		D9ADEFED2175391500EF2E2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFEB2175391500EF2E2D /* Main.storyboard */; };
 		D9ADEFEF2175391600EF2E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFEE2175391600EF2E2D /* Assets.xcassets */; };
 		D9ADEFF22175391600EF2E2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFF02175391600EF2E2D /* LaunchScreen.storyboard */; };
+		D9ADEFFA217632FE00EF2E2D /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D9ADEFE42175391500EF2E2D /* Sup-Sup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sup-Sup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9ADEFE72175391500EF2E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D9ADEFE92175391500EF2E2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D9ADEFE92175391500EF2E2D /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		D9ADEFEC2175391500EF2E2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D9ADEFEE2175391600EF2E2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9ADEFF12175391600EF2E2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9ADEFF32175391600EF2E2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +57,8 @@
 			isa = PBXGroup;
 			children = (
 				D9ADEFE72175391500EF2E2D /* AppDelegate.swift */,
-				D9ADEFE92175391500EF2E2D /* ViewController.swift */,
+				D9ADEFE92175391500EF2E2D /* MessagesViewController.swift */,
+				D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */,
 				D9ADEFEB2175391500EF2E2D /* Main.storyboard */,
 				D9ADEFEE2175391600EF2E2D /* Assets.xcassets */,
 				D9ADEFF02175391600EF2E2D /* LaunchScreen.storyboard */,
@@ -135,7 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9ADEFEA2175391500EF2E2D /* ViewController.swift in Sources */,
+				D9ADEFEA2175391500EF2E2D /* MessagesViewController.swift in Sources */,
+				D9ADEFFA217632FE00EF2E2D /* ChatMessageCell.swift in Sources */,
 				D9ADEFE82175391500EF2E2D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
