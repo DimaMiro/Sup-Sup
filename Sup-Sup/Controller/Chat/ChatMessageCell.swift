@@ -1,5 +1,5 @@
 //
-//  ChatMessageController.swift
+//  ChatMessageCell.swift
 //  Sup-Sup
 //
 //  Created by Dima Miro on 16/10/2018.
@@ -18,7 +18,7 @@ class ChatMessageCell: UITableViewCell {
     
     var chatMessage: ChatMessage! {
         didSet{
-            bubbleBackgroundView.backgroundColor = chatMessage.isIncoming ? .white : .purple
+            bubbleBackgroundView.backgroundColor = chatMessage.isIncoming ? .white : UIColor.CustomColor.electricPurple
             messageLabel.textColor = chatMessage.isIncoming ? .black : .white
             
             messageLabel.text = chatMessage.text
