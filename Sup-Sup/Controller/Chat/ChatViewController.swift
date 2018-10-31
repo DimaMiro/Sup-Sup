@@ -10,7 +10,6 @@ import UIKit
 
 class ChatViewController: UIViewController {
     
-    private var composeView = UIView()
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,19 +50,34 @@ class ChatViewController: UIViewController {
     }
     
     func setupMessageInput() {
+        let composeView = UIView()
         let safeGuide = self.view.safeAreaLayoutGuide
-        composeView.backgroundColor = .purple
+        composeView.backgroundColor = .white
         composeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(composeView)
+        composeView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        composeView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        composeView.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive = true
+        composeView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        composeView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        let constraints = [
-            composeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            composeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            composeView.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor),
-            composeView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            composeView.heightAnchor.constraint(equalToConstant: 50)
-        ]
-        NSLayoutConstraint.activate(constraints)
+        let sendButton = UIButton(type: .system)
+        sendButton.setTitle("Send", for: .normal)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        composeView.addSubview(sendButton)
+        sendButton.trailingAnchor.constraint(equalTo: composeView.trailingAnchor).isActive = true
+        sendButton.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
+        sendButton.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        
+        let inputTextField = UITextField()
+        inputTextField.placeholder = "Text your message..."
+        inputTextField.translatesAutoresizingMaskIntoConstraints = false
+        composeView.addSubview(inputTextField)
+        inputTextField.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 8).isActive = true
+        inputTextField.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
+        inputTextField.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
     }
     
     func setupTableView () {
