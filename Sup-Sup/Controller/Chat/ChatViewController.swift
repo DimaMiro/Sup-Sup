@@ -8,7 +8,17 @@
 
 import UIKit
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController, UITextFieldDelegate {
+    
+    lazy var inputTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Text your message..."
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
+        
+        return textField
+    }()
+    
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -46,7 +56,6 @@ class ChatViewController: UIViewController {
     
     func setupNavbar () {
         navigationItem.title = "Messages"
-//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     func setupMessageInput() {
@@ -55,6 +64,7 @@ class ChatViewController: UIViewController {
         composeView.backgroundColor = .white
         composeView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(composeView)
+        //Constraints
         composeView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         composeView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         composeView.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive = true
@@ -63,21 +73,33 @@ class ChatViewController: UIViewController {
         
         let sendButton = UIButton(type: .system)
         sendButton.setTitle("Send", for: .normal)
+        sendButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        sendButton.setTitleColor(UIColor.CustomColor.electricPurple, for: .normal)
+        sendButton.addTarget(self, action: #selector(handleSendAction), for: .touchUpInside)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         composeView.addSubview(sendButton)
+        //Constraints
         sendButton.trailingAnchor.constraint(equalTo: composeView.trailingAnchor).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
         sendButton.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
-        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
-        let inputTextField = UITextField()
-        inputTextField.placeholder = "Text your message..."
-        inputTextField.translatesAutoresizingMaskIntoConstraints = false
         composeView.addSubview(inputTextField)
-        inputTextField.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 8).isActive = true
+        //Constraints
+        inputTextField.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 12).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
         inputTextField.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        inputTextField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor).isActive = true
+        
+        let separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor.CustomColor.lightGray
+        separatorLine.translatesAutoresizingMaskIntoConstraints = false
+        composeView.addSubview(separatorLine)
+        //Constraints
+        separatorLine.topAnchor.constraint(equalTo: composeView.topAnchor).isActive = true
+        separatorLine.leadingAnchor.constraint(equalTo: composeView.leadingAnchor).isActive = true
+        separatorLine.widthAnchor.constraint(equalTo: composeView.widthAnchor).isActive = true
+        separatorLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
     func setupTableView () {
@@ -100,6 +122,15 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
+    }
+    
+    @objc func handleSendAction () {
+        print(inputTextField.text)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        handleSendAction()
+        return true
     }
     
 }
