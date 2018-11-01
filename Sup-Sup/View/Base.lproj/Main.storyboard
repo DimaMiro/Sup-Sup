@@ -33,7 +33,7 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLl-3h-gY9" customClass="PrimaryButton" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="516" width="300" height="44"/>
@@ -135,7 +135,7 @@
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Znx-0B-F9A">
-                                <rect key="frame" x="37.666666666666657" y="388" width="300" height="44"/>
+                                <rect key="frame" x="37.666666666666657" y="442" width="300" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="FLH-z9-f2c"/>
                                     <constraint firstAttribute="width" constant="300" id="ed4-NF-UUa"/>
@@ -145,13 +145,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rzY-F6-O7e">
-                                <rect key="frame" x="37.666666666666657" y="442" width="300" height="44"/>
+                                <rect key="frame" x="37.666666666666657" y="496" width="300" height="44"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRO-Xf-IBo" customClass="PrimaryButton" customModule="Sup_Sup" customModuleProvider="target">
-                                <rect key="frame" x="37.666666666666657" y="516" width="300" height="44"/>
+                                <rect key="frame" x="37.666666666666657" y="570" width="300" height="44"/>
                                 <color key="backgroundColor" red="0.71742728440000003" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="24x-Eg-QJg"/>
@@ -163,18 +163,32 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-qa-r8y">
+                                <rect key="frame" x="37.666666666666657" y="388" width="300" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="aDB-yV-OmF"/>
+                                    <constraint firstAttribute="width" constant="300" id="afz-fb-YFF"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="40v-Qg-UJz" firstAttribute="top" secondItem="SsB-rU-jWY" secondAttribute="top" id="3RN-eJ-pXD"/>
                             <constraint firstItem="rzY-F6-O7e" firstAttribute="width" secondItem="Znx-0B-F9A" secondAttribute="width" id="5ty-jy-CvQ"/>
-                            <constraint firstItem="Znx-0B-F9A" firstAttribute="top" secondItem="40v-Qg-UJz" secondAttribute="bottom" constant="30" id="JDE-8A-j3B"/>
+                            <constraint firstItem="CHT-qa-r8y" firstAttribute="centerX" secondItem="Znx-0B-F9A" secondAttribute="centerX" id="7dk-Zu-npa"/>
+                            <constraint firstItem="Znx-0B-F9A" firstAttribute="top" secondItem="CHT-qa-r8y" secondAttribute="bottom" constant="10" id="BwN-hn-zhB"/>
+                            <constraint firstItem="CHT-qa-r8y" firstAttribute="top" secondItem="40v-Qg-UJz" secondAttribute="bottom" constant="30" id="LUN-Rx-pZw"/>
                             <constraint firstItem="rzY-F6-O7e" firstAttribute="centerX" secondItem="SsB-rU-jWY" secondAttribute="centerX" id="Lju-vX-Skf"/>
                             <constraint firstItem="cRO-Xf-IBo" firstAttribute="centerX" secondItem="SsB-rU-jWY" secondAttribute="centerX" id="XEL-4d-LaA"/>
                             <constraint firstItem="40v-Qg-UJz" firstAttribute="leading" secondItem="SsB-rU-jWY" secondAttribute="leading" id="a3H-3f-XfH"/>
                             <constraint firstItem="40v-Qg-UJz" firstAttribute="trailing" secondItem="SsB-rU-jWY" secondAttribute="trailing" id="aXa-gz-uhT"/>
                             <constraint firstItem="rzY-F6-O7e" firstAttribute="top" secondItem="Znx-0B-F9A" secondAttribute="bottom" constant="10" id="fim-Kf-Rbx"/>
+                            <constraint firstItem="CHT-qa-r8y" firstAttribute="width" secondItem="Znx-0B-F9A" secondAttribute="width" id="gVn-a0-kYI"/>
                             <constraint firstItem="cRO-Xf-IBo" firstAttribute="top" secondItem="rzY-F6-O7e" secondAttribute="bottom" constant="30" id="paA-XF-RfX"/>
+                            <constraint firstItem="CHT-qa-r8y" firstAttribute="height" secondItem="Znx-0B-F9A" secondAttribute="height" id="qin-5u-UPs"/>
                             <constraint firstItem="rzY-F6-O7e" firstAttribute="height" secondItem="Znx-0B-F9A" secondAttribute="height" id="rPz-Wx-guT"/>
                             <constraint firstItem="cRO-Xf-IBo" firstAttribute="width" secondItem="rzY-F6-O7e" secondAttribute="width" id="sPZ-Ps-oqi"/>
                             <constraint firstItem="Znx-0B-F9A" firstAttribute="centerX" secondItem="SsB-rU-jWY" secondAttribute="centerX" id="x8b-nn-ZgE"/>

@@ -20,7 +20,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }()
     
     
-    private var tableView: UITableView = {
+    fileprivate var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -52,7 +52,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func setupViewStyles() {
+    fileprivate func setupViewStyles() {
         let safeGuide = self.view.safeAreaLayoutGuide
         
         let background = UIImage(named: "chatLogBg")
@@ -74,12 +74,12 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func setupNavbar () {
+    fileprivate func setupNavbar () {
         navigationItem.title = "Messages"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
     }
     
-    func setupMessageInput() {
+    fileprivate func setupMessageInput() {
         let composeView = UIView()
         let safeGuide = self.view.safeAreaLayoutGuide
         composeView.backgroundColor = .white
@@ -123,7 +123,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         separatorLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
-    func setupTableView () {
+    fileprivate func setupTableView () {
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -145,11 +145,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
     }
     
-    @objc func handleSendAction() {
+    @objc fileprivate func handleSendAction() {
         print("Send button has been pressed")
     }
     
-    @objc func handleLogOut() {
+    @objc fileprivate func handleLogOut() {
         print("Log out button has been pressed")
 
     }
