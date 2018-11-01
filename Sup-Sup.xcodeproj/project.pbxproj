@@ -13,6 +13,7 @@
 		D93D19452189C22000B8959A /* CustomColorsExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D19442189C22000B8959A /* CustomColorsExtention.swift */; };
 		D93D194A218B183D00B8959A /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D1949218B183D00B8959A /* PrimaryButton.swift */; };
 		D93D194D218B4F8A00B8959A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D93D194C218B4F8A00B8959A /* GoogleService-Info.plist */; };
+		D93D194F218B597E00B8959A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D194E218B597E00B8959A /* RegisterViewController.swift */; };
 		D9923C51217BCBDC00D684F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9923C50217BCBDC00D684F8 /* LoginViewController.swift */; };
 		D9ADEFE82175391500EF2E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE72175391500EF2E2D /* AppDelegate.swift */; };
 		D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE92175391500EF2E2D /* ChatViewController.swift */; };
@@ -31,6 +32,7 @@
 		D93D19442189C22000B8959A /* CustomColorsExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorsExtention.swift; sourceTree = "<group>"; };
 		D93D1949218B183D00B8959A /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		D93D194C218B4F8A00B8959A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		D93D194E218B597E00B8959A /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D9923C50217BCBDC00D684F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D9ADEFE42175391500EF2E2D /* Sup-Sup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sup-Sup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9ADEFE72175391500EF2E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -91,7 +93,7 @@
 		D93D193C218996C500B8959A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D93D1948218B17EF00B8959A /* Login */,
+				D93D1948218B17EF00B8959A /* Login & Register */,
 				D93D193D2189970400B8959A /* Chat Log */,
 			);
 			path = Controller;
@@ -107,12 +109,13 @@
 			path = "Chat Log";
 			sourceTree = "<group>";
 		};
-		D93D1948218B17EF00B8959A /* Login */ = {
+		D93D1948218B17EF00B8959A /* Login & Register */ = {
 			isa = PBXGroup;
 			children = (
 				D9923C50217BCBDC00D684F8 /* LoginViewController.swift */,
+				D93D194E218B597E00B8959A /* RegisterViewController.swift */,
 			);
-			path = Login;
+			path = "Login & Register";
 			sourceTree = "<group>";
 		};
 		D93D194B218B199C00B8959A /* CommonFiles */ = {
@@ -237,12 +240,14 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -274,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D93D194F218B597E00B8959A /* RegisterViewController.swift in Sources */,
 				D93D1941218997D600B8959A /* ChatMessageStruct.swift in Sources */,
 				D9923C51217BCBDC00D684F8 /* LoginViewController.swift in Sources */,
 				D93D193F2189978800B8959A /* DateHeaderLabel.swift in Sources */,

@@ -122,7 +122,7 @@
         <!--Register-->
         <scene sceneID="7YV-gY-WKR">
             <objects>
-                <viewController title="Register" id="gtW-HG-Hwd" sceneMemberID="viewController">
+                <viewController title="Register" id="gtW-HG-Hwd" customClass="RegisterViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YLj-F0-uxp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,6 +162,9 @@
                                 <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="registerButtonPressed:" destination="gtW-HG-Hwd" eventType="touchUpInside" id="jfJ-lq-Jbk"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-qa-r8y">
                                 <rect key="frame" x="37.666666666666657" y="388" width="300" height="44"/>
@@ -196,6 +199,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SsB-rU-jWY"/>
                     </view>
+                    <connections>
+                        <outlet property="loginTextField" destination="Znx-0B-F9A" id="tJm-ST-QDb"/>
+                        <outlet property="nameTextField" destination="CHT-qa-r8y" id="7Du-zE-lLk"/>
+                        <outlet property="passwordTextField" destination="rzY-F6-O7e" id="jf1-Fr-DcA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mOX-3Q-Q0w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
