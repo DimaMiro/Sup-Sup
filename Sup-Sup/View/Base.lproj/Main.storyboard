@@ -35,7 +35,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLl-3h-gY9">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLl-3h-gY9" customClass="PrimaryButton" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="516" width="300" height="44"/>
                                 <color key="backgroundColor" red="0.71764705882352942" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -47,7 +47,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Nw6-Vp-Kt5" kind="show" id="MrN-Dn-LSE"/>
+                                    <segue destination="Nw6-Vp-Kt5" kind="show" identifier="goToChat" id="MrN-Dn-LSE"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="crP-9D-rvF">
@@ -64,11 +64,11 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Sign Up">
+                                <state key="normal" title="Register">
                                     <color key="titleColor" red="0.69279885460000001" green="0.4530545185" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="gtW-HG-Hwd" kind="show" id="Sbh-IA-HDd"/>
+                                    <segue destination="gtW-HG-Hwd" kind="show" identifier="goToRegistration" id="Sbh-IA-HDd"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -119,10 +119,10 @@
             </objects>
             <point key="canvasLocation" x="1703" y="-24"/>
         </scene>
-        <!--Sign Up-->
+        <!--Register-->
         <scene sceneID="7YV-gY-WKR">
             <objects>
-                <viewController title="Sign Up" id="gtW-HG-Hwd" sceneMemberID="viewController">
+                <viewController title="Register" id="gtW-HG-Hwd" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YLj-F0-uxp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -150,7 +150,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRO-Xf-IBo">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRO-Xf-IBo" customClass="PrimaryButton" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="516" width="300" height="44"/>
                                 <color key="backgroundColor" red="0.71742728440000003" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -159,7 +159,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Sign Up">
+                                <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
