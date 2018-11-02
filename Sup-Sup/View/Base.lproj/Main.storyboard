@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Sign In-->
+        <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dF5-bh-vYv">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dF5-bh-vYv" customClass="CustomTextField" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="388" width="300" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="J7J-gj-IYM"/>
@@ -26,7 +26,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ri9-nz-90g">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ri9-nz-90g" customClass="CustomTextField" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="442" width="300" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="HDh-JR-KZ0"/>
@@ -98,7 +98,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Sign In" id="wQW-B5-lyo"/>
+                    <navigationItem key="navigationItem" title="Login" id="wQW-B5-lyo"/>
+                    <connections>
+                        <outlet property="loginTextField" destination="dF5-bh-vYv" id="aWw-DM-L8d"/>
+                        <outlet property="passwordTextField" destination="ri9-nz-90g" id="agx-eq-QXV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -134,7 +138,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="270" id="D3F-qD-Fpl"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Znx-0B-F9A">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Znx-0B-F9A" customClass="CustomTextField" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="442" width="300" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="FLH-z9-f2c"/>
@@ -144,7 +148,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rzY-F6-O7e">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rzY-F6-O7e" customClass="CustomTextField" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="496" width="300" height="44"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -166,7 +170,7 @@
                                     <action selector="registerButtonPressed:" destination="gtW-HG-Hwd" eventType="touchUpInside" id="jfJ-lq-Jbk"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-qa-r8y">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CHT-qa-r8y" customClass="CustomTextField" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="37.666666666666657" y="388" width="300" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="aDB-yV-OmF"/>

@@ -14,6 +14,7 @@
 		D93D194A218B183D00B8959A /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D1949218B183D00B8959A /* PrimaryButton.swift */; };
 		D93D194D218B4F8A00B8959A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D93D194C218B4F8A00B8959A /* GoogleService-Info.plist */; };
 		D93D194F218B597E00B8959A /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D194E218B597E00B8959A /* RegisterViewController.swift */; };
+		D93D1951218C364800B8959A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D1950218C364800B8959A /* CustomTextField.swift */; };
 		D9923C51217BCBDC00D684F8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9923C50217BCBDC00D684F8 /* LoginViewController.swift */; };
 		D9ADEFE82175391500EF2E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE72175391500EF2E2D /* AppDelegate.swift */; };
 		D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE92175391500EF2E2D /* ChatViewController.swift */; };
@@ -33,6 +34,7 @@
 		D93D1949218B183D00B8959A /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		D93D194C218B4F8A00B8959A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D93D194E218B597E00B8959A /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		D93D1950218C364800B8959A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		D9923C50217BCBDC00D684F8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D9ADEFE42175391500EF2E2D /* Sup-Sup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sup-Sup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9ADEFE72175391500EF2E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				D93D1949218B183D00B8959A /* PrimaryButton.swift */,
+				D93D1950218C364800B8959A /* CustomTextField.swift */,
 				D93D19442189C22000B8959A /* CustomColorsExtention.swift */,
 			);
 			path = CommonFiles;
@@ -283,6 +286,7 @@
 				D93D1941218997D600B8959A /* ChatMessageStruct.swift in Sources */,
 				D9923C51217BCBDC00D684F8 /* LoginViewController.swift in Sources */,
 				D93D193F2189978800B8959A /* DateHeaderLabel.swift in Sources */,
+				D93D1951218C364800B8959A /* CustomTextField.swift in Sources */,
 				D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */,
 				D9ADEFFA217632FE00EF2E2D /* ChatMessageCell.swift in Sources */,
 				D93D19452189C22000B8959A /* CustomColorsExtention.swift in Sources */,
