@@ -59,7 +59,7 @@ class RegisterViewController: UIViewController {
             
             //Success
             let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("\(imageName).png")
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
             
             if let uploadData = self.profileImageView.image?.pngData() {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
