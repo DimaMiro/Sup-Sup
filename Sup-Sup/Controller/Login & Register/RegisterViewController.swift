@@ -58,21 +58,46 @@ class RegisterViewController: UIViewController {
             guard let uid = user?.user.uid else {return}
             
             //Success
-            let reference = Database.database().reference(fromURL: "https://sup-sup-369dc.firebaseio.com/")
-            let usersReference = reference.child("users").child(uid)
-            let values = ["name" : name,
-                          "email" : email
-            ]
-            usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
-                if err != nil {
-                    print("Registration has been failed")
-                    return
-                }
-                self.performSegue(withIdentifier: "goToLoginAfterRegistration", sender: nil)
-                print("Save user succsessfully")
-            })
+            let imageName = NSUUID().uuidString
+            let storageRef = Storage.storage().reference().child("\(imageName).png")
+            
+            if let uploadData = self.profileImageView.image?.pngData() {
+                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    storageRef.downloadURL(completion: { (url, error) in
+                        guard let downloadUrl = url?.absoluteString else {
+                            print(error!)
+                            return
+                        }
+                        let values = [
+                            "name" : name,
+                            "email" : email,
+                            "profileImageUrl" : downloadUrl
+                            ] as [String : AnyObject]
+                        self.registerUserIntoDatabase(withUid: uid, andValues: values as [String : AnyObject])
+                    })
+                    
+                })
+            }
         }
     }
+    
+    private func registerUserIntoDatabase(withUid uid: String, andValues values : [String : AnyObject]) {
+        let reference = Database.database().reference(fromURL: "https://sup-sup-369dc.firebaseio.com/")
+        let usersReference = reference.child("users").child(uid)
+        usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
+            if err != nil {
+                print("Registration has been failed")
+                return
+            }
+            self.performSegue(withIdentifier: "goToLoginAfterRegistration", sender: nil)
+            print("Save user succsessfully")
+        })
+    }
+    
 }
 
 extension RegisterViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
