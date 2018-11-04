@@ -11,6 +11,12 @@ import Firebase
 
 class RegisterViewController: UIViewController {
     
+    @IBOutlet weak var profileImageView: UIImageView! {
+        didSet{
+            profileImageView.isUserInteractionEnabled = true
+            profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        }
+    }
     @IBOutlet weak var nameTextField: CustomTextField!{
         didSet {
             if let image = UIImage(named: "name-icon"){
@@ -40,6 +46,7 @@ class RegisterViewController: UIViewController {
         
     }
     
+    
     @IBAction func registerButtonPressed(_ sender: PrimaryButton) {
         guard let email = loginTextField.text, let _ = passwordTextField.text, let name = nameTextField.text else {print("Email or password is invalid"); return}
         Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { (user, error) in
@@ -58,15 +65,42 @@ class RegisterViewController: UIViewController {
             ]
             usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
                 if err != nil {
-                    print(err!)
+                    print("Registration has been failed")
                     return
                 }
+                self.performSegue(withIdentifier: "goToLoginAfterRegistration", sender: nil)
                 print("Save user succsessfully")
             })
         }
-        
+    }
+}
+
+extension RegisterViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @objc func handleSelectProfileImageView() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true, completion: nil)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var selectedImageFromImagePicker : UIImage?
+        
+        if let editedImage = info[.editedImage] as? UIImage {
+            selectedImageFromImagePicker = editedImage
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            selectedImageFromImagePicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromImagePicker {
+            profileImageView.image = selectedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
     
-    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }

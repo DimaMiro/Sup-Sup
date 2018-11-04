@@ -1,5 +1,5 @@
 //
-//  ChatMessageStruct.swift
+//  ChatMessage.swift
 //  Sup-Sup
 //
 //  Created by Dima Miro on 31/10/2018.

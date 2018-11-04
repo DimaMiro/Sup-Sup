@@ -76,7 +76,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate func setupNavbar () {
         navigationItem.title = "Messages"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
     }
     
     fileprivate func setupMessageInput() {
@@ -148,11 +148,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     @objc fileprivate func handleSendAction() {
         print("Send button has been pressed")
     }
-    
-    @objc fileprivate func handleLogOut() {
-        print("Log out button has been pressed")
-
-    }
+//    
+//    @objc fileprivate func handleLogOut() {
+//        print("Log out button has been pressed")
+//        
+//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         handleSendAction()

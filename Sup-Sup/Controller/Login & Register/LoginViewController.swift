@@ -30,9 +30,22 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupForm()
+        setupNavbar()
     }
-    private func setupForm() {
-        
+    fileprivate func setupNavbar() {
+        navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
+    }
+    
+    @IBAction func loginButtonPressed(_ sender: PrimaryButton) {
+        guard let email = loginTextField.text, let password = passwordTextField.text else {print("Email or password is invalid"); return}
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if error != nil {
+                print("Authorisation has been failed")
+                return
+            }
+            self.performSegue(withIdentifier: "goToChatList", sender: nil)
+            print("Successfully logged in")
+            
+        }
     }
 }
