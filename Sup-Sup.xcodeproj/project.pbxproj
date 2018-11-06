@@ -26,6 +26,7 @@
 		D9ADEFEF2175391600EF2E2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFEE2175391600EF2E2D /* Assets.xcassets */; };
 		D9ADEFF22175391600EF2E2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFF02175391600EF2E2D /* LaunchScreen.storyboard */; };
 		D9ADEFFA217632FE00EF2E2D /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */; };
+		D9C3F6FA2191A216009049D5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C3F6F92191A216009049D5 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		D9ADEFF12175391600EF2E2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9ADEFF32175391600EF2E2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		D9C3F6F92191A216009049D5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +137,6 @@
 			children = (
 				D93D1949218B183D00B8959A /* PrimaryButton.swift */,
 				D93D1950218C364800B8959A /* CustomTextField.swift */,
-				D93D19442189C22000B8959A /* CustomColorsExtention.swift */,
 			);
 			path = CommonFiles;
 			sourceTree = "<group>";
@@ -176,11 +177,21 @@
 				D93D193B218996BE00B8959A /* View */,
 				D93D193C218996C500B8959A /* Controller */,
 				D93D194B218B199C00B8959A /* CommonFiles */,
+				D9C3F6F82191A1FB009049D5 /* Helpers */,
 				D9ADEFEE2175391600EF2E2D /* Assets.xcassets */,
 				D9ADEFF32175391600EF2E2D /* Info.plist */,
 				D93D194C218B4F8A00B8959A /* GoogleService-Info.plist */,
 			);
 			path = "Sup-Sup";
+			sourceTree = "<group>";
+		};
+		D9C3F6F82191A1FB009049D5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D93D19442189C22000B8959A /* CustomColorsExtention.swift */,
+				D9C3F6F92191A216009049D5 /* Extensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +323,7 @@
 				D93D1951218C364800B8959A /* CustomTextField.swift in Sources */,
 				D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */,
 				D93D1958218DD52F00B8959A /* NewChatViewController.swift in Sources */,
+				D9C3F6FA2191A216009049D5 /* Extensions.swift in Sources */,
 				D9ADEFFA217632FE00EF2E2D /* ChatMessageCell.swift in Sources */,
 				D93D19452189C22000B8959A /* CustomColorsExtention.swift in Sources */,
 				D93D194A218B183D00B8959A /* PrimaryButton.swift in Sources */,

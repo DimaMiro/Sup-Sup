@@ -15,6 +15,10 @@ class RegisterViewController: UIViewController {
         didSet{
             profileImageView.isUserInteractionEnabled = true
             profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+            profileImageView.layer.cornerRadius = profileImageView.frame.height/2
+            profileImageView.layer.masksToBounds = true
+            profileImageView.layer.borderWidth = 8
+            profileImageView.layer.borderColor = UIColor.white.cgColor
         }
     }
     @IBOutlet weak var nameTextField: CustomTextField!{
