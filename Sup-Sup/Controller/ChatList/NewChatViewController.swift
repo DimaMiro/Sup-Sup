@@ -64,5 +64,13 @@ class NewChatViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
+    
+    var chatList : ChatListViewController?
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) {
+            self.chatList?.showChatLogController()
+        }
+    }
 }
 

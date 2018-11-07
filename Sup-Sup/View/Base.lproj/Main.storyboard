@@ -136,11 +136,27 @@
                     <connections>
                         <segue destination="gzr-fT-FXw" kind="show" identifier="logOutSegue" id="k0X-og-0No"/>
                         <segue destination="g4V-zI-muG" kind="show" identifier="presentNewChat" id="Ghc-z6-8vV"/>
+                        <segue destination="msG-1q-cca" kind="show" identifier="goToChatLog" id="ID3-MO-zMN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gNK-hP-5lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2513" y="-24"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="THB-cf-Du5">
+            <objects>
+                <viewController id="msG-1q-cca" customClass="ChatViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cki-CN-p5W">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="NtM-37-3js"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NCi-qC-G7F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3418" y="-24"/>
         </scene>
         <!--New Chat View Controller-->
         <scene sceneID="7EE-OE-XwD">
@@ -151,10 +167,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="0nR-hm-SE1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1WD-8T-i3f" customClass="UserCell" customModule="Sup_Sup" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0nR-hm-SE1" id="qfh-Dl-mGh">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1WD-8T-i3f" id="LMt-LN-RdF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
@@ -186,21 +202,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EVX-6y-ZQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1697" y="-24"/>
-        </scene>
-        <!--Chat View Controller-->
-        <scene sceneID="zfo-hR-zAf">
-            <objects>
-                <viewController id="Nw6-Vp-Kt5" customClass="ChatViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="OK5-vU-JnT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="NNX-Av-lB5"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wvT-RP-G4C" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3455" y="-24"/>
         </scene>
         <!--Register-->
         <scene sceneID="7YV-gY-WKR">
@@ -352,6 +353,6 @@
         <image name="topImage" width="375" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IkG-Sd-XP3"/>
+        <segue reference="k0X-og-0No"/>
     </inferredMetricsTieBreakers>
 </document>

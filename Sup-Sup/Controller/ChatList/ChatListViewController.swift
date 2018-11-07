@@ -44,6 +44,14 @@ class ChatListViewController: UITableViewController {
         print("Successfully logged out")
     }
     @objc func handleNewMessage() {
-        self.performSegue(withIdentifier: "presentNewChat", sender: nil)
+        let newChatController = NewChatViewController()
+        newChatController.chatList = self
+        let navController = UINavigationController(rootViewController: newChatController)
+        present(navController, animated: true, completion: nil)
+        
+    }
+    
+    func showChatLogController() {
+        self.performSegue(withIdentifier: "goToChatLog", sender: self)
     }
 }
