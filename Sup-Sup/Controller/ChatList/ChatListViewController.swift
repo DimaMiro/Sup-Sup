@@ -10,13 +10,15 @@ import UIKit
 import Firebase
 
 class ChatListViewController: UITableViewController {
+    
+    var messages = [ChatMessage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupNavbar()
         checkIfUserIsLoggedIn()
-        
+        observeMessages()
     }
     fileprivate func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser?.uid == nil {
@@ -51,7 +53,36 @@ class ChatListViewController: UITableViewController {
         
     }
     
-    func showChatLogController() {
-        self.performSegue(withIdentifier: "goToChatLog", sender: self)
+    func showChatLogController(forUser user: User) {
+        let chatLogController = ChatViewController()
+        chatLogController.user = user
+        navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let message = ChatMessage(dictionary: dictionary)
+                self.messages.append(message)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellID")
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.text
+        
+        return cell
     }
 }
+

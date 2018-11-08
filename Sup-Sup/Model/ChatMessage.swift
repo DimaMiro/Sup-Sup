@@ -6,11 +6,21 @@
 //  Copyright © 2018 Dima Miro. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct ChatMessage {
-    let text: String
-    let isIncoming: Bool
-    let date: Date
+class ChatMessage: NSObject {
     
+    var fromID: String?
+    var toID: String?
+    
+    var text: String?
+    var timestamp: Int?
+//    var isIncoming: Bool?
+//    var date: Date?
+    init(dictionary: [String : Any]) {
+        self.fromID = dictionary["fromID"] as? String
+        self.toID = dictionary["toID"] as? String
+        self.text = dictionary["text"] as? String
+        self.timestamp = dictionary["timestamp"] as? Int
+    }
 }

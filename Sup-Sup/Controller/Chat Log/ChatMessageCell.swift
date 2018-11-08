@@ -16,22 +16,22 @@ class ChatMessageCell: UITableViewCell {
     var leadingConstraint : NSLayoutConstraint!
     var trailingConstraint : NSLayoutConstraint!
     
-    var chatMessage: ChatMessage! {
-        didSet{
-            bubbleBackgroundView.backgroundColor = chatMessage.isIncoming ? .white : UIColor.CustomColor.electricPurple
-            messageLabel.textColor = chatMessage.isIncoming ? .black : .white
-            
-            messageLabel.text = chatMessage.text
-            
-            if chatMessage.isIncoming {
-                leadingConstraint.isActive = true
-                trailingConstraint.isActive = false
-            } else {
-                leadingConstraint.isActive = false
-                trailingConstraint.isActive = true
-            }
-        }
-    }
+//    var chatMessage: ChatMessage! {
+//        didSet{
+//            bubbleBackgroundView.backgroundColor = chatMessage.isIncoming! ? .white : UIColor.CustomColor.electricPurple
+//            messageLabel.textColor = chatMessage.isIncoming! ? .black : .white
+//
+//            messageLabel.text = chatMessage.text
+//
+//            if chatMessage.isIncoming! {
+//                leadingConstraint.isActive = true
+//                trailingConstraint.isActive = false
+//            } else {
+//                leadingConstraint.isActive = false
+//                trailingConstraint.isActive = true
+//            }
+//        }
+//    }
 
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

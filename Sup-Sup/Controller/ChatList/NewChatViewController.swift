@@ -31,7 +31,7 @@ class NewChatViewController: UITableViewController {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : AnyObject] {
                 let user = User()
-                
+                user.id = snapshot.key
                 user.name = dictionary["name"] as? String
                 user.email = dictionary["email"] as? String
                 user.profileImageUrl = dictionary["profileImageUrl"] as? String
@@ -69,7 +69,8 @@ class NewChatViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         dismiss(animated: true) {
-            self.chatList?.showChatLogController()
+            let user = self.users[indexPath.row]
+            self.chatList?.showChatLogController(forUser: user)
         }
     }
 }

@@ -135,57 +135,11 @@
                     <navigationItem key="navigationItem" title="Chats" id="BXS-CO-Z4H"/>
                     <connections>
                         <segue destination="gzr-fT-FXw" kind="show" identifier="logOutSegue" id="k0X-og-0No"/>
-                        <segue destination="g4V-zI-muG" kind="show" identifier="presentNewChat" id="Ghc-z6-8vV"/>
-                        <segue destination="msG-1q-cca" kind="show" identifier="goToChatLog" id="ID3-MO-zMN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gNK-hP-5lM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2513" y="-24"/>
-        </scene>
-        <!--Chat View Controller-->
-        <scene sceneID="THB-cf-Du5">
-            <objects>
-                <viewController id="msG-1q-cca" customClass="ChatViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="cki-CN-p5W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="NtM-37-3js"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NCi-qC-G7F" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3418" y="-24"/>
-        </scene>
-        <!--New Chat View Controller-->
-        <scene sceneID="7EE-OE-XwD">
-            <objects>
-                <tableViewController id="Zyd-Pv-qjg" customClass="NewChatViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ElB-oN-oZN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="1WD-8T-i3f" customClass="UserCell" customModule="Sup_Sup" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1WD-8T-i3f" id="LMt-LN-RdF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Zyd-Pv-qjg" id="XEM-Kn-f4T"/>
-                            <outlet property="delegate" destination="Zyd-Pv-qjg" id="CiC-y8-XU4"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="gCE-is-ODe"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nhS-Ko-iS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3455.1999999999998" y="731.5270935960591"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SHm-ew-dXr">
@@ -328,24 +282,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WdY-6H-NaI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="758" y="732"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="4pC-tr-5Jk">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="g4V-zI-muG" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="z5y-SA-UYU">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Zyd-Pv-qjg" kind="relationship" relationship="rootViewController" id="nOg-1t-3O2"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="s9w-BG-ZTf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2512.8000000000002" y="731.5270935960591"/>
         </scene>
     </scenes>
     <resources>
