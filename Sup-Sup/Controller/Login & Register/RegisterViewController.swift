@@ -90,7 +90,7 @@ class RegisterViewController: UIViewController {
     }
     
     private func registerUserIntoDatabase(withUid uid: String, andValues values : [String : AnyObject]) {
-        let reference = Database.database().reference(fromURL: "https://sup-sup-369dc.firebaseio.com/")
+        let reference = Database.database().reference()
         let usersReference = reference.child("users").child(uid)
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {

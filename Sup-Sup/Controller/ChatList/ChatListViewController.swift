@@ -11,6 +11,7 @@ import Firebase
 
 class ChatListViewController: UITableViewController {
     
+    let cellID = "cellID"
     var messages = [ChatMessage]()
 
     override func viewDidLoad() {
@@ -18,6 +19,7 @@ class ChatListViewController: UITableViewController {
 
         setupNavbar()
         checkIfUserIsLoggedIn()
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         observeMessages()
     }
     fileprivate func checkIfUserIsLoggedIn() {
@@ -78,11 +80,15 @@ class ChatListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellID")
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! UserCell
         let message = messages[indexPath.row]
-        cell.textLabel?.text = message.text
+        cell.message = message
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64
     }
 }
 

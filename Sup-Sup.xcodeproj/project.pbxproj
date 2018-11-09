@@ -97,6 +97,7 @@
 		D93D193B218996BE00B8959A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D93D195B218DEB5100B8959A /* UserCell.swift */,
 				D9ADEFF02175391600EF2E2D /* LaunchScreen.storyboard */,
 				D9ADEFEB2175391500EF2E2D /* Main.storyboard */,
 			);
@@ -146,7 +147,6 @@
 			children = (
 				D93D1954218CEEBD00B8959A /* ChatListViewController.swift */,
 				D93D1957218DD52F00B8959A /* NewChatViewController.swift */,
-				D93D195B218DEB5100B8959A /* UserCell.swift */,
 			);
 			path = ChatList;
 			sourceTree = "<group>";

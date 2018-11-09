@@ -7,8 +7,27 @@
 //
 
 import UIKit
+import Firebase
 
 class UserCell: UITableViewCell {
+    
+    var message : ChatMessage? {
+        didSet {
+            if let toID = message?.toID {
+                let ref = Database.database().reference().child("users").child(toID)
+                ref.observe(.value, with: { (snapshot) in
+                    if let dictionary = snapshot.value as? [String : AnyObject]{
+                        self.textLabel?.text = dictionary["name"] as? String
+                        if let profileImageUrl = dictionary["profileImageUrl"] as? String {
+                            self.profileImageView.loadImageUsingCache(withUrlString: profileImageUrl)
+                        }
+                    }
+                    
+                }, withCancel: nil)
+            }
+            self.detailTextLabel?.text = message?.text
+        }
+    }
     
     override func layoutSubviews() {
         super .layoutSubviews()
@@ -25,10 +44,22 @@ class UserCell: UITableViewCell {
         return imageView
     }()
     
+    let timeLabel : UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.lightGray
+        label.text = "HH:MM:SS"
+        label.textAlignment = .right
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubview(profileImageView)
+        addSubview(timeLabel)
         setupProfileImage()
+        setupTimeLabel()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,5 +73,9 @@ class UserCell: UITableViewCell {
         profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor).isActive = true
     }
     
-    
+    func setupTimeLabel(){
+        timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
+        timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+    }
 }
