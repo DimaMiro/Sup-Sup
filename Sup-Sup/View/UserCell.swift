@@ -26,6 +26,15 @@ class UserCell: UITableViewCell {
                 }, withCancel: nil)
             }
             self.detailTextLabel?.text = message?.text
+            
+            if let seconds = message?.timestamp{
+                let timeStampDate = NSDate(timeIntervalSince1970: Double(seconds))
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm:ss a"
+                timeLabel.text = dateFormatter.string(from: timeStampDate as Date)
+            }
+            
+            
         }
     }
     

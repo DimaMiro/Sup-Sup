@@ -13,6 +13,7 @@ class ChatListViewController: UITableViewController {
     
     let cellID = "cellID"
     var messages = [ChatMessage]()
+    var messagesDictionary = [String : ChatMessage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +67,14 @@ class ChatListViewController: UITableViewController {
         ref.observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 let message = ChatMessage(dictionary: dictionary)
-                self.messages.append(message)
+                
+                if let toID = message.toID {
+                    self.messagesDictionary[toID] = message
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sort(by: { (m1, m2) -> Bool in
+                        return m1.timestamp! > m2.timestamp!
+                    })
+                }
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
