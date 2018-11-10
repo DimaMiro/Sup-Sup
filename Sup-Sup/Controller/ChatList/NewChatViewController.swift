@@ -20,13 +20,12 @@ class NewChatViewController: UITableViewController {
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         fetchUser()
     }
+    
     fileprivate func setupNavbar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
     }
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
-    }
+    
     fileprivate func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : AnyObject] {
@@ -45,6 +44,12 @@ class NewChatViewController: UITableViewController {
         }, withCancel: nil)
     }
     
+    //MARK: - Handlers
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - TableView Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }

@@ -21,7 +21,9 @@ class ChatListViewController: UITableViewController {
         setupNavbar()
         checkIfUserIsLoggedIn()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
-        observeMessages()
+//        observeMessages()
+        observeUserMessages()
+        
     }
     fileprivate func checkIfUserIsLoggedIn() {
         if Auth.auth().currentUser?.uid == nil {
@@ -39,6 +41,9 @@ class ChatListViewController: UITableViewController {
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
         navigationController?.navigationBar.prefersLargeTitles = true
     }
+    
+    
+    //MARK: - Handlers
     @objc func handleLogOut() {
         do {
             try Auth.auth().signOut()
@@ -56,10 +61,39 @@ class ChatListViewController: UITableViewController {
         
     }
     
+    //MARK: - Transitions
     func showChatLogController(forUser user: User) {
         let chatLogController = ChatViewController()
         chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
+    }
+    
+    //MARK: - Observes
+    
+    func observeUserMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded, with: { (snapshot) in
+            let messageId = snapshot.key
+            let messageReference = Database.database().reference().child("messages").child(messageId)
+            messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String : Any] {
+                    let message = ChatMessage(dictionary: dictionary)
+                    
+                    if let toID = message.toID {
+                        self.messagesDictionary[toID] = message
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages.sort(by: { (m1, m2) -> Bool in
+                            return m1.timestamp! > m2.timestamp!
+                        })
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }, withCancel: nil)
+        }, withCancel: nil)
     }
     
     func observeMessages() {
@@ -83,6 +117,8 @@ class ChatListViewController: UITableViewController {
         }, withCancel: nil)
     }
     
+    
+    //MARK: - TableView Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }

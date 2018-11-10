@@ -31,7 +31,6 @@ extension UIImageView {
                 return
             }
             DispatchQueue.main.async {
-                
                 if let dowloadedImage = UIImage(data: data!) {
                     imageCache.setObject(dowloadedImage, forKey: urlString as AnyObject)
                     self.image = dowloadedImage
@@ -39,5 +38,4 @@ extension UIImageView {
             }
             }.resume()
     }
-    
 }
