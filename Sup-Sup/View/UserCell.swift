@@ -13,18 +13,8 @@ class UserCell: UITableViewCell {
     
     var message : ChatMessage? {
         didSet {
-            if let toID = message?.toID {
-                let ref = Database.database().reference().child("users").child(toID)
-                ref.observe(.value, with: { (snapshot) in
-                    if let dictionary = snapshot.value as? [String : AnyObject]{
-                        self.textLabel?.text = dictionary["name"] as? String
-                        if let profileImageUrl = dictionary["profileImageUrl"] as? String {
-                            self.profileImageView.loadImageUsingCache(withUrlString: profileImageUrl)
-                        }
-                    }
-                    
-                }, withCancel: nil)
-            }
+            setupNameAndAvatar()
+            
             self.detailTextLabel?.text = message?.text
             
             if let seconds = message?.timestamp{
@@ -33,6 +23,29 @@ class UserCell: UITableViewCell {
                 dateFormatter.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dateFormatter.string(from: timeStampDate as Date)
             }
+        }
+    }
+    
+    private func setupNameAndAvatar() {
+        
+        let chatPartnerID : String?
+        if  message?.fromID == Auth.auth().currentUser?.uid {
+            chatPartnerID = message?.toID
+        } else {
+            chatPartnerID = message?.fromID
+        }
+        
+        if let id = chatPartnerID {
+            let ref = Database.database().reference().child("users").child(id)
+            ref.observe(.value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String : AnyObject]{
+                    self.textLabel?.text = dictionary["name"] as? String
+                    if let profileImageUrl = dictionary["profileImageUrl"] as? String {
+                        self.profileImageView.loadImageUsingCache(withUrlString: profileImageUrl)
+                    }
+                }
+                
+            }, withCancel: nil)
         }
     }
     
@@ -56,7 +69,6 @@ class UserCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.lightGray
-        label.text = "HH:MM:SS"
         label.textAlignment = .right
         return label
     }()
@@ -66,8 +78,8 @@ class UserCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubview(profileImageView)
         addSubview(timeLabel)
-        setupProfileImage()
-        setupTimeLabel()
+        setupProfileImageConstraints()
+        setupTimeLabelConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,14 +87,14 @@ class UserCell: UITableViewCell {
     }
     
     //MARK: - Constraints
-    func setupProfileImage() {
+    func setupProfileImageConstraints() {
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
         profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor).isActive = true
     }
     
-    func setupTimeLabel(){
+    func setupTimeLabelConstraints(){
         timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16).isActive = true
         timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 16).isActive = true
         timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true

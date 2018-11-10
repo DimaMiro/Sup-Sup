@@ -21,8 +21,7 @@ class ChatListViewController: UITableViewController {
         setupNavbar()
         checkIfUserIsLoggedIn()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
-//        observeMessages()
-        observeUserMessages()
+        
         
     }
     fileprivate func checkIfUserIsLoggedIn() {
@@ -31,10 +30,18 @@ class ChatListViewController: UITableViewController {
         } else {
             let uid = Auth.auth().currentUser?.uid
             Database.database().reference().child("users").child(uid!).observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
+                self.resetChatList()
             }, withCancel: nil)
         }
     }
+    
+    func resetChatList(){
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        observeUserMessages()
+    }
+    
     fileprivate func setupNavbar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))

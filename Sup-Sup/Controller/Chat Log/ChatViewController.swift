@@ -161,7 +161,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         let fromID = Auth.auth().currentUser!.uid
         let timestamp = Int(NSDate().timeIntervalSince1970)
         let values = ["fromID": fromID, "toID": toID, "text": inputTextField.text!, "timestamp": timestamp] as [String : Any]
-//        childRef.updateChildValues(values)
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
                 print(error!)
@@ -171,6 +170,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
             let messageID = childRef.key
             userMessagesRef.updateChildValues([messageID : 1])
             
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID)
+            recipientUserMessagesRef.updateChildValues([messageID : 1])
         }
     }
     
