@@ -141,5 +141,17 @@ class ChatListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        guard let chatPartnerID = message.chatPartnerID() else { return }
+        let ref = Database.database().reference().child("users").child(chatPartnerID)
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            guard let dictionary = snapshot.value as? [String : AnyObject] else { return }
+            let user = User(dictionary: dictionary)
+            self.showChatLogController(forUser: user)
+        }, withCancel: nil)
+        
+    }
 }
 

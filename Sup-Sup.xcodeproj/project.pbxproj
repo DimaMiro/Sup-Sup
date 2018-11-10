@@ -98,6 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				D93D195B218DEB5100B8959A /* UserCell.swift */,
+				D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */,
+				D93D193E2189978800B8959A /* DateHeaderLabel.swift */,
 				D9ADEFF02175391600EF2E2D /* LaunchScreen.storyboard */,
 				D9ADEFEB2175391500EF2E2D /* Main.storyboard */,
 			);
@@ -118,8 +120,6 @@
 			isa = PBXGroup;
 			children = (
 				D9ADEFE92175391500EF2E2D /* ChatViewController.swift */,
-				D9ADEFF9217632FE00EF2E2D /* ChatMessageCell.swift */,
-				D93D193E2189978800B8959A /* DateHeaderLabel.swift */,
 			);
 			path = "Chat Log";
 			sourceTree = "<group>";

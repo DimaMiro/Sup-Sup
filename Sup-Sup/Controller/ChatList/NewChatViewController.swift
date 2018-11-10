@@ -29,11 +29,11 @@ class NewChatViewController: UITableViewController {
     fileprivate func fetchUser() {
         Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : AnyObject] {
-                let user = User()
+                let user = User(dictionary: dictionary)
                 user.id = snapshot.key
-                user.name = dictionary["name"] as? String
-                user.email = dictionary["email"] as? String
-                user.profileImageUrl = dictionary["profileImageUrl"] as? String
+//                user.name = dictionary["name"] as? String
+//                user.email = dictionary["email"] as? String
+//                user.profileImageUrl = dictionary["profileImageUrl"] as? String
                 
                 self.users.append(user)
                 
