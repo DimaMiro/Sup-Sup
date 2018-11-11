@@ -12,24 +12,21 @@ class ChatMessageCell: UITableViewCell {
     
     let messageLabel = UILabel()
     let bubbleBackgroundView = UIView()
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "profilePicPlaceholder")
+        imageView.layer.cornerRadius = 16
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
     
     var leadingConstraint : NSLayoutConstraint!
     var trailingConstraint : NSLayoutConstraint!
     
     var chatMessage: ChatMessage! {
         didSet{
-//            bubbleBackgroundView.backgroundColor = chatMessage.isIncoming! ? .white : UIColor.CustomColor.electricPurple
-//            messageLabel.textColor = chatMessage.isIncoming! ? .black : .white
-
             messageLabel.text = chatMessage.text
-
-//            if chatMessage.isIncoming! {
-//                leadingConstraint.isActive = true
-//                trailingConstraint.isActive = false
-//            } else {
-//                leadingConstraint.isActive = false
-//                trailingConstraint.isActive = true
-//            }
         }
     }
 
@@ -44,6 +41,8 @@ class ChatMessageCell: UITableViewCell {
         
         addSubview(bubbleBackgroundView)
         
+        addSubview(profileImageView)
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(messageLabel)
     
@@ -53,20 +52,26 @@ class ChatMessageCell: UITableViewCell {
         
         // Set up constrains
         let constraints = [
-            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -27),
+            
+            profileImageView.widthAnchor.constraint(equalToConstant: 32),
+            profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor),
+            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            profileImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+            
+            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250),
             
-            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
+            bubbleBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -8),
             bubbleBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 8),
             bubbleBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16)
             ]
         
         NSLayoutConstraint.activate(constraints)
         
         
-        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 27)
+        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 27)
         leadingConstraint.isActive = false
         
         trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -27)

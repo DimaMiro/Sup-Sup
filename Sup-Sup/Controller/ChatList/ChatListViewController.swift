@@ -95,35 +95,21 @@ class ChatListViewController: UITableViewController {
                         })
                     }
                     
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
+                    self.timer?.invalidate()
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
                 }
             }, withCancel: nil)
         }, withCancel: nil)
     }
     
-    func observeMessages() {
-        let ref = Database.database().reference().child("messages")
-        ref.observe(.childAdded, with: { (snapshot) in
-            if let dictionary = snapshot.value as? [String : Any] {
-                let message = ChatMessage(dictionary: dictionary)
-                
-                if let toID = message.toID {
-                    self.messagesDictionary[toID] = message
-                    self.messages = Array(self.messagesDictionary.values)
-                    self.messages.sort(by: { (m1, m2) -> Bool in
-                        return m1.timestamp! > m2.timestamp!
-                    })
-                }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-        }, withCancel: nil)
-    }
+    // Little trick with reloading table view
+    var timer : Timer?
     
+    @objc func handleReloadTable() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
     
     //MARK: - TableView Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

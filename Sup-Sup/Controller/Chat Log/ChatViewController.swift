@@ -160,7 +160,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate func setupTableView () {
         
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0) // Make tableView scroll with bottom gap for correct showing messageInput
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 50, right: 0) // Make tableView scroll with bottom gap for correct showing messageInput
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         self.view.addSubview(tableView)
@@ -212,12 +212,18 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
+        
+        if let userProfileImageURL = self.user?.profileImageUrl {
+            cell.profileImageView.loadImageUsingCache(withUrlString: userProfileImageURL)
+        }
+        
         if message.fromID == Auth.auth().currentUser?.uid {
             // Will be purple
             cell.bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
             cell.messageLabel.textColor = .white
             cell.leadingConstraint.isActive = false
             cell.trailingConstraint.isActive = true
+            cell.profileImageView.isHidden = true
             
         } else {
             // Will be gray
