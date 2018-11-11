@@ -211,6 +211,23 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    fileprivate func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
+        if message.fromID == Auth.auth().currentUser?.uid {
+            // Will be purple
+            cell.bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
+            cell.messageLabel.textColor = .white
+            cell.leadingConstraint.isActive = false
+            cell.trailingConstraint.isActive = true
+            
+        } else {
+            // Will be gray
+            cell.bubbleBackgroundView.backgroundColor = .white
+            cell.messageLabel.textColor = .black
+            cell.leadingConstraint.isActive = true
+            cell.trailingConstraint.isActive = false
+        }
+    }
+    
 }
 
 // MARK: - Extension for TableView
@@ -260,7 +277,9 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
         let chatMessage = messagesArray[indexPath.row]
 
         cell.chatMessage = chatMessage
-
+        
+        setupMessageCell(cell: cell, message: chatMessage)
+        
         return cell
     }
 

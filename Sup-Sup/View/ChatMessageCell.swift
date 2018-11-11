@@ -39,7 +39,7 @@ class ChatMessageCell: UITableViewCell {
         backgroundColor = .clear
         
         bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
-        bubbleBackgroundView.layer.cornerRadius = 12
+        bubbleBackgroundView.layer.cornerRadius = 16
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(bubbleBackgroundView)
