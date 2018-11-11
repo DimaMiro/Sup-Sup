@@ -87,8 +87,8 @@ class ChatListViewController: UITableViewController {
                 if let dictionary = snapshot.value as? [String : Any] {
                     let message = ChatMessage(dictionary: dictionary)
                     
-                    if let toID = message.toID {
-                        self.messagesDictionary[toID] = message
+                    if let chatPartnerID = message.chatPartnerID() {
+                        self.messagesDictionary[chatPartnerID] = message
                         self.messages = Array(self.messagesDictionary.values)
                         self.messages.sort(by: { (m1, m2) -> Bool in
                             return m1.timestamp! > m2.timestamp!

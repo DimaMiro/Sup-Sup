@@ -160,6 +160,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate func setupTableView () {
         
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0) // Make tableView scroll with bottom gap for correct showing messageInput
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         self.view.addSubview(tableView)
@@ -193,6 +194,9 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
                 print(error!)
                 return
             }
+            
+            self.inputTextField.text = nil
+            
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromID)
             let messageID = childRef.key
             userMessagesRef.updateChildValues([messageID : 1])

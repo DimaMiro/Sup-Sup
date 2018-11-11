@@ -38,7 +38,7 @@ class ChatMessageCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
         
-        bubbleBackgroundView.backgroundColor = .yellow
+        bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
         bubbleBackgroundView.layer.cornerRadius = 12
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -48,6 +48,7 @@ class ChatMessageCell: UITableViewCell {
         addSubview(messageLabel)
     
         messageLabel.numberOfLines = 0
+        messageLabel.textColor = .white
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         // Set up constrains
