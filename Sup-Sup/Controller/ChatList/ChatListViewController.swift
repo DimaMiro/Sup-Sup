@@ -149,6 +149,7 @@ class ChatListViewController: UITableViewController {
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let dictionary = snapshot.value as? [String : AnyObject] else { return }
             let user = User(dictionary: dictionary)
+            user.id = chatPartnerID
             self.showChatLogController(forUser: user)
         }, withCancel: nil)
         

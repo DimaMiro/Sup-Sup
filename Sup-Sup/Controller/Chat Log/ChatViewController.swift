@@ -14,6 +14,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     var user : User? {
         didSet{
             navigationItem.title = user?.name
+            observeMessages()
         }
     }
     
@@ -34,7 +35,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }()
     
     fileprivate let cellId = "messageID"
-    let messagesArray = [ChatMessage]()
+    var messagesArray = [ChatMessage]()
 //    let messagesArray = [
 //        [
 //            ChatMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum aliquet efficitur.", isIncoming: true, date: Date()),
@@ -54,7 +55,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         setupViewStyles()
         setupNavbar()
-//        setupTableView()
+        setupTableView()
         setupMessageInput()
         
     }
@@ -85,6 +86,32 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate func setupNavbar () {
         self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child("messages").child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                print(snapshot)
+                
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let message = ChatMessage(dictionary: dictionary)
+                
+                if message.chatPartnerID() == self.user?.id {
+                    self.messagesArray.append(message)
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            }, withCancel: nil)
+
+        }, withCancel: nil)
     }
     
     fileprivate func setupMessageInput() {
@@ -147,8 +174,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         ]
         NSLayoutConstraint.activate(constraints)
         
-//        tableView.delegate = self
-//        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
     }
@@ -183,12 +210,12 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
 }
 
 // MARK: - Extension for TableView
-//extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
-//
+extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
+
 //    func numberOfSections(in tableView: UITableView) -> Int {
 //        return messagesArray.count
 //    }
-//
+
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //
 //        if let firstMessageInSection = messagesArray[section].first {
@@ -210,25 +237,27 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
 //        }
 //        return nil
 //    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 50
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
 //        return messagesArray[section].count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
-//
+        return messagesArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
+
 //        let chatMessage = messagesArray[indexPath.section][indexPath.row]
-//
-//        cell.chatMessage = chatMessage
-//
-//        return cell
-//    }
-//
-//}
+        let chatMessage = messagesArray[indexPath.row]
+
+        cell.chatMessage = chatMessage
+
+        return cell
+    }
+
+}
