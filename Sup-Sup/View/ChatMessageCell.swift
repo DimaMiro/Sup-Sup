@@ -15,7 +15,7 @@ class ChatMessageCell: UITableViewCell {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profilePicPlaceholder")
-        imageView.layer.cornerRadius = 16
+        imageView.layer.cornerRadius = 18
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -53,7 +53,7 @@ class ChatMessageCell: UITableViewCell {
         // Set up constrains
         let constraints = [
             
-            profileImageView.widthAnchor.constraint(equalToConstant: 32),
+            profileImageView.widthAnchor.constraint(equalToConstant: 36),
             profileImageView.heightAnchor.constraint(equalTo: profileImageView.widthAnchor),
             profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             profileImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),

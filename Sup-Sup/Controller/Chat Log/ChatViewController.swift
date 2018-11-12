@@ -36,19 +36,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     fileprivate let cellId = "messageID"
     var messagesArray = [ChatMessage]()
-//    let messagesArray = [
-//        [
-//            ChatMessage(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum aliquet efficitur.", isIncoming: true, date: Date()),
-//            ChatMessage(text: "Etiam non fringilla arcu.", isIncoming: false, date: Date()),
-//        ],
-//        [
-//            ChatMessage(text: "Quisque interdum volutpat ultricies. Maecenas ex ipsum, tristique laoreet tortor at, venenatis accumsan elit.", isIncoming: true, date: Date()),
-//            ChatMessage(text: "Nulla scelerisque vel quam sed vehicula. Phasellus a massa sit amet sem commodo semper. Nam sed ornare neque.", isIncoming: true, date: Date()),
-//            ChatMessage(text: "Quisque eu diam consequat, consectetur nulla pulvinar, euismod felis. Suspendisse vitae ex eget lacus venenatis fringilla ut a ligula. Fusce hendrerit, ante vitae venenatis viverra, lectus odio tempus mauris, at varius enim metus ut ex.", isIncoming: false, date: Date())
-//
-//        ]
-//    ]
-    
+
+    var messageInputComposeViewBottomAnchor : NSLayoutConstraint?
     
     
     override func viewDidLoad() {
@@ -57,6 +46,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         setupNavbar()
         setupTableView()
         setupMessageInput()
+        setupKeyboardObservers()
         
     }
     
@@ -123,7 +113,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         //Constraints
         composeView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         composeView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        composeView.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor).isActive = true
+        messageInputComposeViewBottomAnchor = composeView.bottomAnchor.constraint(equalTo: safeGuide.bottomAnchor)
+        messageInputComposeViewBottomAnchor?.isActive = true
         composeView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         composeView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
@@ -231,6 +222,35 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
             cell.messageLabel.textColor = .black
             cell.leadingConstraint.isActive = true
             cell.trailingConstraint.isActive = false
+        }
+    }
+    
+    fileprivate func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
+//        print(notification.userInfo)
+        let keyboardFrame = notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
+        let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
+        let safeAreaHeight = view.safeAreaInsets.bottom
+        messageInputComposeViewBottomAnchor?.constant = -keyboardFrame!.height + safeAreaHeight
+        UIView.animate(withDuration: keyboardAnimationDuration!) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func handleKeyboardWillHide(notification: NSNotification) {
+        let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
+        messageInputComposeViewBottomAnchor?.constant = 0
+        UIView.animate(withDuration: keyboardAnimationDuration!) {
+            self.view.layoutIfNeeded()
         }
     }
     
