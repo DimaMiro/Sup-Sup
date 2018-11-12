@@ -79,8 +79,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
     
     func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        guard let uid = Auth.auth().currentUser?.uid, let toID = user?.id else {return}
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toID)
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
             print(snapshot)
             let messageID = snapshot.key
@@ -91,10 +91,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
                 guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
                 let message = ChatMessage(dictionary: dictionary)
                 
-                if message.chatPartnerID() == self.user?.id {
-                    self.messagesArray.append(message)
-                }
-                
+                self.messagesArray.append(message)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -188,11 +185,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
             
             self.inputTextField.text = nil
             
-            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID)
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
             let messageID = childRef.key
             userMessagesRef.updateChildValues([messageID : 1])
             
-            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID)
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
             recipientUserMessagesRef.updateChildValues([messageID : 1])
         }
     }

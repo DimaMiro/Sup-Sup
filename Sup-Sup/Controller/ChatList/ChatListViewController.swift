@@ -81,31 +81,42 @@ class ChatListViewController: UITableViewController {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded, with: { (snapshot) in
-            let messageId = snapshot.key
-            let messageReference = Database.database().reference().child("messages").child(messageId)
-            messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
-                if let dictionary = snapshot.value as? [String : Any] {
-                    let message = ChatMessage(dictionary: dictionary)
-                    
-                    if let chatPartnerID = message.chatPartnerID() {
-                        self.messagesDictionary[chatPartnerID] = message
-                        self.messages = Array(self.messagesDictionary.values)
-                        self.messages.sort(by: { (m1, m2) -> Bool in
-                            return m1.timestamp! > m2.timestamp!
-                        })
-                    }
-                    
-                    self.timer?.invalidate()
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
-                }
+            let userId = snapshot.key
+            Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
+                let messageID = snapshot.key
+                self.fetchMessage(withMessageId: messageID)
             }, withCancel: nil)
         }, withCancel: nil)
+    }
+    
+    private func fetchMessage(withMessageId messageID : String) {
+        let messageReference = Database.database().reference().child("messages").child(messageID)
+        messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String : Any] {
+                let message = ChatMessage(dictionary: dictionary)
+                
+                if let chatPartnerID = message.chatPartnerID() {
+                    self.messagesDictionary[chatPartnerID] = message
+                }
+                self.attamptReloadingOfTable()
+            }
+        }, withCancel: nil)
+    }
+    
+    private func attamptReloadingOfTable() {
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(self.handleReloadTable), userInfo: nil, repeats: false)
     }
     
     // Little trick with reloading table view
     var timer : Timer?
     
     @objc func handleReloadTable() {
+        
+        self.messages = Array(self.messagesDictionary.values)
+        self.messages.sort(by: { (m1, m2) -> Bool in
+            return m1.timestamp! > m2.timestamp!
+        })
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
