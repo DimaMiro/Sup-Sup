@@ -182,13 +182,25 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc fileprivate func handleSendAction() {
-        print("Send button has been pressed")
+        let textProperty = ["text": inputTextField.text!]
+        sendMessage(withProperties: textProperty)
+    }
+    
+    func sendMessageImage(withUrl imageUrl: String, ofImage image: UIImage) {
+        let imageProperties = ["imageUrl": imageUrl, "imageWidth": image.size.width, "imageHeight": image.size.height] as [String : Any]
+        sendMessage(withProperties: imageProperties)
+    }
+    
+    private func sendMessage(withProperties properties: [String : Any]){
         let ref = Database.database().reference().child("messages")
         let childRef = ref.childByAutoId()
         let toID = user!.id!
         let fromID = Auth.auth().currentUser!.uid
         let timestamp = Int(NSDate().timeIntervalSince1970)
-        let values = ["fromID": fromID, "toID": toID, "text": inputTextField.text!, "timestamp": timestamp] as [String : Any]
+        var values = ["fromID": fromID, "toID": toID, "timestamp": timestamp] as [String : Any]
+        //Append values dictionary with property dictionary
+        //key $0, value $1
+        properties.forEach({values[$0] = $1})
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
                 print(error!)
@@ -224,7 +236,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-//        print(notification.userInfo)
         let keyboardFrame = notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
         let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
         let safeAreaHeight = view.safeAreaInsets.bottom
@@ -282,36 +293,14 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
                 }
                 storageRef.downloadURL(completion: { (url, error) in
                     if let imageUrl = url?.absoluteString {
-                        self.sendMessageImage(withUrl: imageUrl)
+                        self.sendMessageImage(withUrl: imageUrl, ofImage: image)
                     }
                 })
             }
         }
     }
     
-    func sendMessageImage(withUrl imageUrl: String) {
-        let ref = Database.database().reference().child("messages")
-        let childRef = ref.childByAutoId()
-        let toID = user!.id!
-        let fromID = Auth.auth().currentUser!.uid
-        let timestamp = Int(NSDate().timeIntervalSince1970)
-        let values = ["fromID": fromID, "toID": toID, "imageUrl": imageUrl, "timestamp": timestamp] as [String : Any]
-        childRef.updateChildValues(values) { (error, ref) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            self.inputTextField.text = nil
-            
-            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
-            let messageID = childRef.key
-            userMessagesRef.updateChildValues([messageID : 1])
-            
-            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
-            recipientUserMessagesRef.updateChildValues([messageID : 1])
-        }
-    }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -354,8 +343,11 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat = 250
         
-        if let text = messagesArray[indexPath.row].text {
+        let message = messagesArray[indexPath.row]
+        if let text = message.text {
             height = estimateTextSize(forText: text).height + 24
+        } else if let imageWidth = message.imageWidth, let imageHeight = message.imageHeight {
+            height = CGFloat(imageHeight / imageWidth * 250)
         }
         
         return height
@@ -385,6 +377,8 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
         setupMessageCell(cell: cell, message: chatMessage)
         if let messageText = chatMessage.text{
             cell.bubbleWidthConstraint?.constant = estimateTextSize(forText: messageText).width + 32
+        } else if chatMessage.imageUrl != nil {
+            cell.bubbleWidthConstraint?.constant = 250
         }
         
         return cell

@@ -16,6 +16,9 @@ class ChatMessage: NSObject {
     
     var text: String?
     var imageUrl: String?
+    var imageWidth: Float?
+    var imageHeight: Float?
+    
     var timestamp: Int?
     
     
@@ -24,6 +27,8 @@ class ChatMessage: NSObject {
         self.toID = dictionary["toID"] as? String
         self.text = dictionary["text"] as? String
         self.imageUrl = dictionary["imageUrl"] as? String
+        self.imageWidth = dictionary["imageWidth"] as? Float
+        self.imageHeight = dictionary["imageHeight"] as? Float
         self.timestamp = dictionary["timestamp"] as? Int
     }
     

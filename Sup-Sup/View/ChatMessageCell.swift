@@ -31,10 +31,11 @@ class ChatMessageCell: UITableViewCell {
     let messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "imagePlaceholder")
         imageView.layer.cornerRadius = 18
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .brown
+//        imageView.backgroundColor = .brown
         return imageView
     }()
     

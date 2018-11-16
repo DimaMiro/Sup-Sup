@@ -14,9 +14,6 @@ extension UIImageView {
     
     func loadImageUsingCache(withUrlString urlString : String) {
         
-        //Set a placeholder as a default image
-//        self.image = UIImage(named: "profilePicPlaceholder")
-        
         //Check cache for image first
         if let chacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
             self.image = chacheImage
