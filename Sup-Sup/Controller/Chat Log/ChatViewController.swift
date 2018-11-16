@@ -131,6 +131,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         let uploadImageView = UIImageView()
         uploadImageView.image = UIImage(named: "uploadImage")
         uploadImageView.translatesAutoresizingMaskIntoConstraints = false
+        uploadImageView.isUserInteractionEnabled = true
+        uploadImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleUploadImage)))
         composeView.addSubview(uploadImageView)
         //Constraints
         uploadImageView.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 8).isActive = true
@@ -240,6 +242,14 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+}
+
+
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    @objc func handleUploadImage() {
+        let imagePicker = UIImagePickerController()
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
 
 // MARK: - Extension for TableView
