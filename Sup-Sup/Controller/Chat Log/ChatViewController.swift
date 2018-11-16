@@ -128,9 +128,19 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         sendButton.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
         
+        let uploadImageView = UIImageView()
+        uploadImageView.image = UIImage(named: "uploadImage")
+        uploadImageView.translatesAutoresizingMaskIntoConstraints = false
+        composeView.addSubview(uploadImageView)
+        //Constraints
+        uploadImageView.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 8).isActive = true
+        uploadImageView.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
+        uploadImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
+        uploadImageView.heightAnchor.constraint(equalTo: uploadImageView.widthAnchor).isActive = true
+        
         composeView.addSubview(inputTextField)
         //Constraints
-        inputTextField.leadingAnchor.constraint(equalTo: composeView.leadingAnchor, constant: 12).isActive = true
+        inputTextField.leadingAnchor.constraint(equalTo: uploadImageView.trailingAnchor, constant: 8).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: composeView.centerYAnchor).isActive = true
         inputTextField.heightAnchor.constraint(equalTo: composeView.heightAnchor).isActive = true
         inputTextField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor).isActive = true
