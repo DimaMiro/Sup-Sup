@@ -94,6 +94,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
                 self.messagesArray.append(message)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    let indexPath : IndexPath = IndexPath(row: self.messagesArray.count - 1, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
                 
             }, withCancel: nil)
@@ -240,6 +242,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
         let safeAreaHeight = view.safeAreaInsets.bottom
         messageInputComposeViewBottomAnchor?.constant = -keyboardFrame!.height + safeAreaHeight
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: keyboardFrame!.height + 16, right: 0)
         UIView.animate(withDuration: keyboardAnimationDuration!) {
             self.view.layoutIfNeeded()
         }
@@ -248,6 +251,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     @objc func handleKeyboardWillHide(notification: NSNotification) {
         let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
         messageInputComposeViewBottomAnchor?.constant = 0
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 50, right: 0)
         UIView.animate(withDuration: keyboardAnimationDuration!) {
             self.view.layoutIfNeeded()
         }
