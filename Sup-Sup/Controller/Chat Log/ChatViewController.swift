@@ -248,7 +248,73 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
 extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func handleUploadImage() {
         let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print("We selected an image")
+        var selectedImageFromImagePicker : UIImage?
+        
+        if let editedImage = info[.editedImage] as? UIImage {
+            selectedImageFromImagePicker = editedImage
+        } else if let originalImage = info[.originalImage] as? UIImage {
+            selectedImageFromImagePicker = originalImage
+        }
+        
+        if let selectedImage = selectedImageFromImagePicker {
+            uploadToFirebaseStorage(withImage: selectedImage)
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func uploadToFirebaseStorage(withImage image: UIImage) {
+        let imageName = NSUUID().uuidString
+        let storageRef = Storage.storage().reference().child("message-images").child("\(imageName).jpg")
+        
+        if let uploadData = image.jpegData(compressionQuality: 0.2) {
+            storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+                if error != nil {
+                    print("Upload has been failed with error: \(error!)")
+                    return
+                }
+                storageRef.downloadURL(completion: { (url, error) in
+                    if let imageUrl = url?.absoluteString {
+                        self.sendMessageImage(withUrl: imageUrl)
+                    }
+                })
+            }
+        }
+    }
+    
+    func sendMessageImage(withUrl imageUrl: String) {
+        let ref = Database.database().reference().child("messages")
+        let childRef = ref.childByAutoId()
+        let toID = user!.id!
+        let fromID = Auth.auth().currentUser!.uid
+        let timestamp = Int(NSDate().timeIntervalSince1970)
+        let values = ["fromID": fromID, "toID": toID, "imageUrl": imageUrl, "timestamp": timestamp] as [String : Any]
+        childRef.updateChildValues(values) { (error, ref) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            
+            self.inputTextField.text = nil
+            
+            let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
+            let messageID = childRef.key
+            userMessagesRef.updateChildValues([messageID : 1])
+            
+            let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
+            recipientUserMessagesRef.updateChildValues([messageID : 1])
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -317,8 +383,9 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
         cell.chatMessage = chatMessage
         
         setupMessageCell(cell: cell, message: chatMessage)
-        
-        cell.bubbleWidthConstraint?.constant = estimateTextSize(forText: chatMessage.text!).width
+        if let messageText = chatMessage.text{
+            cell.bubbleWidthConstraint?.constant = estimateTextSize(forText: messageText).width + 32
+        }
         
         return cell
     }

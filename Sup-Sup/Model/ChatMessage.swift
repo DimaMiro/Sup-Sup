@@ -15,13 +15,15 @@ class ChatMessage: NSObject {
     var toID: String?
     
     var text: String?
+    var imageUrl: String?
     var timestamp: Int?
-//    var isIncoming: Bool?
-//    var date: Date?
+    
+    
     init(dictionary: [String : Any]) {
         self.fromID = dictionary["fromID"] as? String
         self.toID = dictionary["toID"] as? String
         self.text = dictionary["text"] as? String
+        self.imageUrl = dictionary["imageUrl"] as? String
         self.timestamp = dictionary["timestamp"] as? Int
     }
     
