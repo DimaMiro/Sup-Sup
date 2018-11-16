@@ -199,28 +199,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    fileprivate func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
-        
-        if let userProfileImageURL = self.user?.profileImageUrl {
-            cell.profileImageView.loadImageUsingCache(withUrlString: userProfileImageURL)
-        }
-        
-        if message.fromID == Auth.auth().currentUser?.uid {
-            // Will be purple
-            cell.bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
-            cell.messageLabel.textColor = .white
-            cell.leadingConstraint.isActive = false
-            cell.trailingConstraint.isActive = true
-            cell.profileImageView.isHidden = true
-            
-        } else {
-            // Will be gray
-            cell.bubbleBackgroundView.backgroundColor = .white
-            cell.messageLabel.textColor = .black
-            cell.leadingConstraint.isActive = true
-            cell.trailingConstraint.isActive = false
-        }
-    }
+    
     
     fileprivate func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -285,6 +264,22 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height: CGFloat = 32
+        
+        if let text = messagesArray[indexPath.row].text {
+            height = estimateTextSize(forText: text).height + 24
+        }
+        
+        return height
+    }
+    
+    private func estimateTextSize(forText text: String) -> CGRect {
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)], context: nil)
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
@@ -303,7 +298,34 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
         
         setupMessageCell(cell: cell, message: chatMessage)
         
+        cell.bubbleWidthConstraint?.constant = estimateTextSize(forText: chatMessage.text!).width
+        
         return cell
+    }
+    
+    private func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
+        
+        
+        
+        if let userProfileImageURL = self.user?.profileImageUrl {
+            cell.profileImageView.loadImageUsingCache(withUrlString: userProfileImageURL)
+        }
+        
+        if message.fromID == Auth.auth().currentUser?.uid {
+            // Will be purple
+            cell.bubbleBackgroundView.backgroundColor = UIColor.CustomColor.electricPurple
+            cell.messageLabel.textColor = .white
+            cell.bubbleLeadingConstraint?.isActive = false
+            cell.bubbleTrailingConstraint?.isActive = true
+            cell.profileImageView.isHidden = true
+            
+        } else {
+            // Will be gray
+            cell.bubbleBackgroundView.backgroundColor = .white
+            cell.messageLabel.textColor = .black
+            cell.bubbleLeadingConstraint?.isActive = true
+            cell.bubbleTrailingConstraint?.isActive = false
+        }
     }
 
 }
