@@ -347,12 +347,12 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
 //        return nil
 //    }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 50
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height: CGFloat = 32
+        var height: CGFloat = 250
         
         if let text = messagesArray[indexPath.row].text {
             height = estimateTextSize(forText: text).height + 24
@@ -391,9 +391,6 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     private func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
-        
-        
-        
         if let userProfileImageURL = self.user?.profileImageUrl {
             cell.profileImageView.loadImageUsingCache(withUrlString: userProfileImageURL)
         }
@@ -413,6 +410,14 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
             cell.bubbleLeadingConstraint?.isActive = true
             cell.bubbleTrailingConstraint?.isActive = false
         }
+        
+        if let messageImageUrl = message.imageUrl {
+            cell.messageImageView.loadImageUsingCache(withUrlString: messageImageUrl)
+            cell.messageImageView.isHidden = false
+            cell.bubbleBackgroundView.backgroundColor = .clear
+        } else {
+            cell.messageImageView.isHidden = true
+            
+        }
     }
-
 }
