@@ -21,7 +21,7 @@ class ChatListViewController: UITableViewController {
         setupNavbar()
         checkIfUserIsLoggedIn()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
-        
+        tableView.allowsMultipleSelectionDuringEditing = true
         
     }
     fileprivate func checkIfUserIsLoggedIn() {
@@ -101,6 +101,10 @@ class ChatListViewController: UITableViewController {
                 self.attamptReloadingOfTable()
             }
         }, withCancel: nil)
+        messageReference.observe(.childRemoved, with: { (snapshot) in
+            self.messagesDictionary.removeValue(forKey: snapshot.key)
+            self.attamptReloadingOfTable()
+        }, withCancel: nil)
     }
     
     private func attamptReloadingOfTable() {
@@ -125,6 +129,27 @@ class ChatListViewController: UITableViewController {
     //MARK: - TableView Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let message = messages[indexPath.row]
+        
+        if let chatPartnerId = message.chatPartnerID() {
+            Database.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue { (error, ref) in
+                if error != nil {
+                    print("Failed to delete chatLog: \(error!)")
+                    return
+                }
+                self.messagesDictionary.removeValue(forKey: chatPartnerId)
+                self.attamptReloadingOfTable()
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

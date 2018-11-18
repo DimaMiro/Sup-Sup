@@ -161,7 +161,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func setupTableView () {
-        
         tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 50, right: 0) // Make tableView scroll with bottom gap for correct showing messageInput
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -261,7 +260,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     var blackBackground: UIView?
     
     func performZoomIn(forImageView startingImage: UIImageView) {
-        print("BANG BANG")
         startingFrame = startingImage.superview?.convert(startingImage.frame, to: nil)
         let zoomInImage = UIImageView(frame: startingFrame!)
         zoomInImage.image = startingImage.image
@@ -277,7 +275,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
             keyWindow.addSubview(blackBackground!)
             keyWindow.addSubview(zoomInImage)
             
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.blackBackground?.alpha = 1
                 zoomInImage.alpha = 1
                 let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
@@ -289,7 +287,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     
     @objc func handleZoomOut(gesture: UITapGestureRecognizer) {
         if let zoomOutImage = gesture.view {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 zoomOutImage.frame = self.startingFrame!
                 zoomOutImage.alpha = 0
                 self.blackBackground?.alpha = 0
@@ -297,7 +296,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
                 zoomOutImage.removeFromSuperview()
             }
         }
-        
     }
 }
 
