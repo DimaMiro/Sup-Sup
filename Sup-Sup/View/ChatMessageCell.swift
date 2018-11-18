@@ -10,6 +10,8 @@ import UIKit
 
 class ChatMessageCell: UITableViewCell {
     
+    var chatViewController: ChatViewController?
+    
     let messageLabel : UITextView = {
         let textView = UITextView()
         textView.isScrollEnabled = false
@@ -28,14 +30,16 @@ class ChatMessageCell: UITableViewCell {
         return view
     }()
     
-    let messageImageView: UIImageView = {
+    lazy var messageImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "imagePlaceholder")
         imageView.layer.cornerRadius = 18
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
-//        imageView.backgroundColor = .brown
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomTap)))
+        
         return imageView
     }()
     
@@ -99,6 +103,13 @@ class ChatMessageCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func handleZoomTap(tapGesture: UITapGestureRecognizer){
+        if let imageView = tapGesture.view as? UIImageView {
+            self.chatViewController?.performZoomIn(forImageView: imageView)
+        }
+        
     }
     
 }

@@ -257,6 +257,48 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    var startingFrame: CGRect?
+    var blackBackground: UIView?
+    
+    func performZoomIn(forImageView startingImage: UIImageView) {
+        print("BANG BANG")
+        startingFrame = startingImage.superview?.convert(startingImage.frame, to: nil)
+        let zoomInImage = UIImageView(frame: startingFrame!)
+        zoomInImage.image = startingImage.image
+        zoomInImage.isUserInteractionEnabled = true
+        zoomInImage.alpha = 0
+        zoomInImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
+        
+        if let keyWindow = UIApplication.shared.keyWindow{
+            blackBackground = UIView(frame: keyWindow.frame)
+            blackBackground?.backgroundColor = .black
+            blackBackground?.alpha = 0
+            
+            keyWindow.addSubview(blackBackground!)
+            keyWindow.addSubview(zoomInImage)
+            
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                self.blackBackground?.alpha = 1
+                zoomInImage.alpha = 1
+                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
+                zoomInImage.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
+                zoomInImage.center = keyWindow.center
+            }, completion: nil)
+        }
+    }
+    
+    @objc func handleZoomOut(gesture: UITapGestureRecognizer) {
+        if let zoomOutImage = gesture.view {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                zoomOutImage.frame = self.startingFrame!
+                zoomOutImage.alpha = 0
+                self.blackBackground?.alpha = 0
+            }) { (completed: Bool) in
+                zoomOutImage.removeFromSuperview()
+            }
+        }
+        
+    }
 }
 
 
@@ -313,36 +355,6 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
 
 // MARK: - Extension for TableView
 extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
-
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return messagesArray.count
-//    }
-
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//        if let firstMessageInSection = messagesArray[section].first {
-//            let dateFormatter = DateFormatter()
-//            dateFormatter.dateFormat = "d MMMM"
-//            let dateString = dateFormatter.string(from: firstMessageInSection.date)
-//
-//            let label = DateHeaderLabel()
-//            label.text = dateString
-//
-//            let containerView = UIView()
-//
-//            containerView.addSubview(label)
-//
-//            label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
-//            label.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-//
-//            return containerView
-//        }
-//        return nil
-//    }
-
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 50
-//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var height: CGFloat = 250
@@ -365,15 +377,13 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-//        return messagesArray[section].count
         return messagesArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
+        cell.chatViewController = self
 
-//        let chatMessage = messagesArray[indexPath.section][indexPath.row]
         let chatMessage = messagesArray[indexPath.row]
 
         cell.chatMessage = chatMessage
@@ -381,8 +391,10 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
         setupMessageCell(cell: cell, message: chatMessage)
         if let messageText = chatMessage.text{
             cell.bubbleWidthConstraint?.constant = estimateTextSize(forText: messageText).width + 32
+            cell.messageLabel.isHidden = false
         } else if chatMessage.imageUrl != nil {
             cell.bubbleWidthConstraint?.constant = 250
+            cell.messageLabel.isHidden = true
         }
         
         return cell
