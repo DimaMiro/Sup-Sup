@@ -28,12 +28,35 @@ class LoginViewController: UIViewController {
         }
     }
     
+    
+    @IBOutlet weak var topImageHeightConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavbar()
+        setupKeyboardObservers()
     }
     fileprivate func setupNavbar() {
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
+    }
+    
+    fileprivate func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
+        self.topImageHeightConstraint.constant = 150
+        self.view.layoutIfNeeded()
+    }
+    
+    @objc func handleKeyboardWillHide(notification: NSNotification) {
+        self.topImageHeightConstraint.constant = 270
+        self.view.layoutIfNeeded()
     }
     
     @IBAction func loginButtonPressed(_ sender: PrimaryButton) {
