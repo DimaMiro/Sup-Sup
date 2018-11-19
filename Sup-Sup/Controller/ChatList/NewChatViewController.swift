@@ -18,6 +18,7 @@ class NewChatViewController: UITableViewController {
         super.viewDidLoad()
         setupNavbar()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
+        self.tableView.tableFooterView = UIView()
         fetchUser()
     }
     
@@ -31,9 +32,6 @@ class NewChatViewController: UITableViewController {
             if let dictionary = snapshot.value as? [String : AnyObject] {
                 let user = User(dictionary: dictionary)
                 user.id = snapshot.key
-//                user.name = dictionary["name"] as? String
-//                user.email = dictionary["email"] as? String
-//                user.profileImageUrl = dictionary["profileImageUrl"] as? String
                 
                 self.users.append(user)
                 

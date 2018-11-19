@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
     
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        self.topImageHeightConstraint.constant = 150
+        self.topImageHeightConstraint.constant = 120
         self.view.layoutIfNeeded()
     }
     

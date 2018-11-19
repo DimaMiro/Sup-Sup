@@ -70,6 +70,13 @@
                                     <segue destination="gtW-HG-Hwd" kind="show" identifier="goToRegistration" id="Sbh-IA-HDd"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="bCe-yl-Xj1">
+                                <rect key="frame" x="137.66666666666666" y="173" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="HuI-Ft-OTJ"/>
+                                    <constraint firstAttribute="width" constant="100" id="Vud-PZ-kBG"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -79,11 +86,13 @@
                             <constraint firstItem="ri9-nz-90g" firstAttribute="height" secondItem="dF5-bh-vYv" secondAttribute="height" id="7IG-IO-cXe"/>
                             <constraint firstItem="L28-Al-OGe" firstAttribute="top" secondItem="vLl-3h-gY9" secondAttribute="bottom" constant="14" id="IC6-ry-SJh"/>
                             <constraint firstItem="ri9-nz-90g" firstAttribute="top" secondItem="dF5-bh-vYv" secondAttribute="bottom" constant="10" id="KUK-6b-X8e"/>
+                            <constraint firstItem="bCe-yl-Xj1" firstAttribute="centerX" secondItem="crP-9D-rvF" secondAttribute="centerX" id="Lr1-kV-6O2"/>
                             <constraint firstItem="EAp-Xm-vLd" firstAttribute="centerX" secondItem="crP-9D-rvF" secondAttribute="centerX" id="MjT-lW-jpj"/>
                             <constraint firstItem="L28-Al-OGe" firstAttribute="width" secondItem="vLl-3h-gY9" secondAttribute="width" id="PKm-6R-npX"/>
                             <constraint firstItem="ri9-nz-90g" firstAttribute="width" secondItem="dF5-bh-vYv" secondAttribute="width" id="Wwo-X7-GWr"/>
                             <constraint firstItem="dF5-bh-vYv" firstAttribute="centerX" secondItem="EAp-Xm-vLd" secondAttribute="centerX" id="ZHl-KD-Hsy"/>
                             <constraint firstItem="L28-Al-OGe" firstAttribute="centerX" secondItem="EAp-Xm-vLd" secondAttribute="centerX" id="b9g-8u-6tq"/>
+                            <constraint firstItem="bCe-yl-Xj1" firstAttribute="centerY" secondItem="crP-9D-rvF" secondAttribute="centerY" id="bAa-oX-BDT"/>
                             <constraint firstItem="crP-9D-rvF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bBJ-EW-zVf"/>
                             <constraint firstItem="crP-9D-rvF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="cOX-WF-gQt"/>
                             <constraint firstItem="dF5-bh-vYv" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EAp-Xm-vLd" secondAttribute="trailing" id="eKc-2M-OH3"/>
@@ -288,6 +297,7 @@
     </scenes>
     <resources>
         <image name="addProfilePicture" width="120" height="120"/>
+        <image name="logo" width="141" height="141"/>
         <image name="topImage" width="375" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>

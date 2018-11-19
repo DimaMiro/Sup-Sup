@@ -22,6 +22,7 @@ class ChatListViewController: UITableViewController {
         checkIfUserIsLoggedIn()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         tableView.allowsMultipleSelectionDuringEditing = true
+        self.tableView.tableFooterView = UIView()
         
     }
     fileprivate func checkIfUserIsLoggedIn() {
