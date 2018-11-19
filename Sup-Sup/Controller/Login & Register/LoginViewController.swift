@@ -36,6 +36,11 @@ class LoginViewController: UIViewController {
         setupNavbar()
         setupKeyboardObservers()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+    
     fileprivate func setupNavbar() {
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
     }
@@ -44,10 +49,7 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
+    
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         self.topImageHeightConstraint.constant = 150
@@ -71,4 +73,12 @@ class LoginViewController: UIViewController {
             
         }
     }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
 }
