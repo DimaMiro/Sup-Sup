@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1FD091C4DE83A0D0413EE57C /* Pods_Sup_Sup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2387B0775BAD6590511234CB /* Pods_Sup_Sup.framework */; };
+		D923509021A46FC00087BF26 /* LoginNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923508F21A46FC00087BF26 /* LoginNavigationController.swift */; };
 		D93D193F2189978800B8959A /* DateHeaderLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D193E2189978800B8959A /* DateHeaderLabel.swift */; };
 		D93D1941218997D600B8959A /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D1940218997D600B8959A /* ChatMessage.swift */; };
 		D93D19452189C22000B8959A /* CustomColorsExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D19442189C22000B8959A /* CustomColorsExtention.swift */; };
@@ -33,6 +34,7 @@
 		0248F7694D3A3E53177D89FC /* Pods-Sup-Sup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sup-Sup.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sup-Sup/Pods-Sup-Sup.release.xcconfig"; sourceTree = "<group>"; };
 		2387B0775BAD6590511234CB /* Pods_Sup_Sup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sup_Sup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A2FD04D31E68422C89C3C3 /* Pods-Sup-Sup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sup-Sup.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sup-Sup/Pods-Sup-Sup.debug.xcconfig"; sourceTree = "<group>"; };
+		D923508F21A46FC00087BF26 /* LoginNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginNavigationController.swift; sourceTree = "<group>"; };
 		D93D193E2189978800B8959A /* DateHeaderLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHeaderLabel.swift; sourceTree = "<group>"; };
 		D93D1940218997D600B8959A /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		D93D19442189C22000B8959A /* CustomColorsExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorsExtention.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		D93D1948218B17EF00B8959A /* Login & Register */ = {
 			isa = PBXGroup;
 			children = (
+				D923508F21A46FC00087BF26 /* LoginNavigationController.swift */,
 				D9923C50217BCBDC00D684F8 /* LoginViewController.swift */,
 				D93D194E218B597E00B8959A /* RegisterViewController.swift */,
 			);
@@ -320,6 +323,7 @@
 				D93D193F2189978800B8959A /* DateHeaderLabel.swift in Sources */,
 				D93D1955218CEEBD00B8959A /* ChatListViewController.swift in Sources */,
 				D93D195C218DEB5100B8959A /* UserCell.swift in Sources */,
+				D923509021A46FC00087BF26 /* LoginNavigationController.swift in Sources */,
 				D93D1951218C364800B8959A /* CustomTextField.swift in Sources */,
 				D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */,
 				D93D1958218DD52F00B8959A /* NewChatViewController.swift in Sources */,

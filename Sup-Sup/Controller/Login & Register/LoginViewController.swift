@@ -28,17 +28,26 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
     @IBOutlet weak var topImageHeightConstraint: NSLayoutConstraint!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupKeyboardObservers()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavbar()
-        setupKeyboardObservers()
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         view.endEditing(true)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override open var shouldAutorotate: Bool {
+        return false
     }
     
     fileprivate func setupNavbar() {
@@ -52,7 +61,7 @@ class LoginViewController: UIViewController {
     
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
-        self.topImageHeightConstraint.constant = 120
+        self.topImageHeightConstraint.constant = 150
         self.view.layoutIfNeeded()
     }
     

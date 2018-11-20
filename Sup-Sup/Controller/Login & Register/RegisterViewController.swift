@@ -50,6 +50,10 @@ class RegisterViewController: UIViewController {
         
     }
     
+    override open var shouldAutorotate: Bool {
+        return false
+    }
+    
     
     @IBAction func registerButtonPressed(_ sender: PrimaryButton) {
         guard let email = loginTextField.text, let _ = passwordTextField.text, let name = nameTextField.text else {print("Email or password is invalid"); return}

@@ -39,6 +39,10 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
 
     var messageInputComposeViewBottomAnchor : NSLayoutConstraint?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupKeyboardObservers()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +50,16 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         setupNavbar()
         setupTableView()
         setupMessageInput()
-        setupKeyboardObservers()
         
     }
     
-    fileprivate func setupViewStyles() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Setup View Controller method group
+    private func setupViewStyles() {
         let safeGuide = self.view.safeAreaLayoutGuide
         
         let background = UIImage(named: "chatLogBg")
@@ -74,36 +83,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    fileprivate func setupNavbar () {
+    private func setupNavbar () {
         self.navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
-    func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid, let toID = user?.id else {return}
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toID)
-        userMessagesRef.observe(.childAdded, with: { (snapshot) in
-            print(snapshot)
-            let messageID = snapshot.key
-            let messagesRef = Database.database().reference().child("messages").child(messageID)
-            messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
-                
-                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
-                let message = ChatMessage(dictionary: dictionary)
-                
-                self.messagesArray.append(message)
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    let indexPath : IndexPath = IndexPath(row: self.messagesArray.count - 1, section: 0)
-                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-                }
-                
-            }, withCancel: nil)
 
-        }, withCancel: nil)
-    }
-    
-    fileprivate func setupMessageInput() {
+    private func setupMessageInput() {
         let composeView = UIView()
         let safeGuide = self.view.safeAreaLayoutGuide
         composeView.backgroundColor = .white
@@ -160,7 +144,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         separatorLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
     }
     
-    fileprivate func setupTableView () {
+    private func setupTableView () {
         tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 50, right: 0) // Make tableView scroll with bottom gap for correct showing messageInput
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -182,7 +166,39 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
     }
     
-    @objc fileprivate func handleSendAction() {
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - Observe Messages
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid, let toID = user?.id else {return}
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toID)
+        userMessagesRef.observe(.childAdded, with: { (snapshot) in
+            print(snapshot)
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child("messages").child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                print(snapshot)
+                
+                guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
+                let message = ChatMessage(dictionary: dictionary)
+                
+                self.messagesArray.append(message)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    let indexPath : IndexPath = IndexPath(row: self.messagesArray.count - 1, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+                }
+                
+            }, withCancel: nil)
+            
+        }, withCancel: nil)
+    }
+    
+    // MARK: - Send message method group
+    @objc private func handleSendAction() {
         let textProperty = ["text": inputTextField.text!]
         sendMessage(withProperties: textProperty)
     }
@@ -224,24 +240,13 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    
-    fileprivate func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
+    // MARK: - Keyboard handlers
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         let keyboardFrame = notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
         let keyboardAnimationDuration = notification.userInfo?["UIKeyboardAnimationDurationUserInfoKey"] as? Double
         let safeAreaHeight = view.safeAreaInsets.bottom
         messageInputComposeViewBottomAnchor?.constant = -keyboardFrame!.height + safeAreaHeight
-        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: keyboardFrame!.height + 16, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: keyboardFrame!.height + 50, right: 0)
         UIView.animate(withDuration: keyboardAnimationDuration!) {
             self.view.layoutIfNeeded()
         }
@@ -256,6 +261,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // MARK: - Zoom functionality
     var startingFrame: CGRect?
     var blackBackground: UIView?
     
@@ -299,7 +305,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-
+// MARK: - Extension for ImagePickerController
 extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func handleUploadImage() {
         let imagePicker = UIImagePickerController()
