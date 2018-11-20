@@ -108,6 +108,7 @@ class ChatMessageCell: UITableViewCell {
     @objc func handleZoomTap(tapGesture: UITapGestureRecognizer){
         if let imageView = tapGesture.view as? UIImageView {
             self.chatViewController?.performZoomIn(forImageView: imageView)
+            self.chatViewController?.view.endEditing(true)
         }
         
     }

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ChatViewController: UIViewController, UITextFieldDelegate {
+class ChatViewController: UIViewController {
     
     var user : User? {
         didSet{
@@ -235,10 +235,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        handleSendAction()
-        return true
-    }
+    
     
     // MARK: - Keyboard handlers
     @objc func handleKeyboardWillShow(notification: NSNotification) {
@@ -302,6 +299,14 @@ class ChatViewController: UIViewController, UITextFieldDelegate {
                 zoomOutImage.removeFromSuperview()
             }
         }
+    }
+}
+
+// MARK: - Extension for TextField
+extension ChatViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        handleSendAction()
+        return true
     }
 }
 
@@ -405,6 +410,7 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     private func setupMessageCell(cell: ChatMessageCell, message: ChatMessage){
+        cell.selectionStyle = .none
         if let userProfileImageURL = self.user?.profileImageUrl {
             cell.profileImageView.loadImageUsingCache(withUrlString: userProfileImageURL)
         }
@@ -433,5 +439,9 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
             cell.messageImageView.isHidden = true
             
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        view.endEditing(true)
     }
 }
