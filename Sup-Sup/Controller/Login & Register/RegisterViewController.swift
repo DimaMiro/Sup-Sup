@@ -48,13 +48,46 @@ class RegisterViewController: UIViewController {
             }
         }
     }
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupKeyboardObservers()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override open var shouldAutorotate: Bool {
         return false
+    }
+    
+    fileprivate func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
+    @objc func handleKeyboardWillShow(notification: NSNotification) {
+        let keyboardFrame = notification.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame!.height - 120, right: 0)
+        let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height + keyboardFrame!.height - 120)
+        scrollView.setContentOffset(bottomOffset, animated: true)
+        self.view.layoutIfNeeded()
+    }
+    
+    @objc func handleKeyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.view.layoutIfNeeded()
     }
     
     
@@ -150,4 +183,12 @@ extension RegisterViewController : UIImagePickerControllerDelegate, UINavigation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
+}
+
+extension RegisterViewController: UITextFieldDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
 }
