@@ -21,6 +21,9 @@ class RegisterViewController: UIViewController {
             profileImageView.layer.borderColor = UIColor.white.cgColor
         }
     }
+    
+    var isProfileImage: Bool = false
+    
     @IBOutlet weak var nameTextField: CustomTextField!{
         didSet {
             if let image = UIImage(named: "name-icon"){
@@ -66,30 +69,40 @@ class RegisterViewController: UIViewController {
             guard let uid = user?.user.uid else {return}
             
             //Success
-            let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
             
-            if let profileImage = self.profileImageView.image, let uploadData = profileImage.jpegData(compressionQuality: 0.1) {
-                storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                    if error != nil {
-                        print(error!)
-                        return
-                    }
-                    storageRef.downloadURL(completion: { (url, error) in
-                        guard let downloadUrl = url?.absoluteString else {
+            if self.isProfileImage {
+                let imageName = NSUUID().uuidString
+                let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+                
+                if let profileImage = self.profileImageView.image, let uploadData = profileImage.jpegData(compressionQuality: 0.1) {
+                    storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                        if error != nil {
                             print(error!)
                             return
                         }
-                        let values = [
-                            "name" : name,
-                            "email" : email,
-                            "profileImageUrl" : downloadUrl
-                            ] as [String : AnyObject]
-                        self.registerUserIntoDatabase(withUid: uid, andValues: values as [String : AnyObject])
+                        storageRef.downloadURL(completion: { (url, error) in
+                            guard let downloadUrl = url?.absoluteString else {
+                                print(error!)
+                                return
+                            }
+                            let values = [
+                                "name" : name,
+                                "email" : email,
+                                "profileImageUrl" : downloadUrl
+                                ] as [String : AnyObject]
+                            self.registerUserIntoDatabase(withUid: uid, andValues: values as [String : AnyObject])
+                        })
+                        
                     })
-                    
-                })
+                }
+            } else {
+                let values = [
+                    "name" : name,
+                    "email" : email
+                    ] as [String : AnyObject]
+                self.registerUserIntoDatabase(withUid: uid, andValues: values as [String : AnyObject])
             }
+            
         }
     }
     
@@ -128,6 +141,7 @@ extension RegisterViewController : UIImagePickerControllerDelegate, UINavigation
         
         if let selectedImage = selectedImageFromImagePicker {
             profileImageView.image = selectedImage
+            isProfileImage = true
         }
         
         dismiss(animated: true, completion: nil)
