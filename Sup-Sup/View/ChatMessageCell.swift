@@ -105,6 +105,11 @@ class ChatMessageCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = UIImage(named: "profilePicPlaceholder")
+    }
+    
     @objc func handleZoomTap(tapGesture: UITapGestureRecognizer){
         if let imageView = tapGesture.view as? UIImageView {
             self.chatViewController?.performZoomIn(forImageView: imageView)

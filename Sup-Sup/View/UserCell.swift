@@ -82,6 +82,11 @@ class UserCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = UIImage(named: "profilePicPlaceholder")
+    }
+    
     //MARK: - Constraints
     func setupProfileImageConstraints() {
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
