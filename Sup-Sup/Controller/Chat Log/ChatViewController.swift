@@ -17,6 +17,15 @@ class ChatViewController: UIViewController {
             observeMessages()
         }
     }
+
+    let chatPartnerProfileImage : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "profilePicPlaceholder"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.layer.cornerRadius = 18
+        return button
+    } ()
+    
     
     lazy var inputTextField: UITextField = {
         let textField = UITextField()
@@ -85,6 +94,20 @@ class ChatViewController: UIViewController {
     
     private func setupNavbar () {
         self.navigationController?.navigationBar.prefersLargeTitles = false
+        let rightBarButton = UIBarButtonItem(customView: chatPartnerProfileImage)
+        rightBarButton.customView?.translatesAutoresizingMaskIntoConstraints = false
+        rightBarButton.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        rightBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        
+        
+        if let userProfileImageURL = self.user?.profileImageUrl {
+            let profileImageFromUrl = UIImageView()
+            profileImageFromUrl.loadImageUsingCache(withUrlString: userProfileImageURL)
+            chatPartnerProfileImage.setImage(profileImageFromUrl.image, for: .normal)
+            
+        }
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        
     }
 
     private func setupMessageInput() {
