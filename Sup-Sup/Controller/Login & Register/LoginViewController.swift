@@ -30,6 +30,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var topImageHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var loginButton: PrimaryButton!
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupKeyboardObservers()
@@ -72,14 +74,20 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonPressed(_ sender: PrimaryButton) {
         guard let email = loginTextField.text, let password = passwordTextField.text else {print("Email or password is invalid"); return}
+        loginButton.loadingIndicatorSwitcher(isShow: true)
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+
             if error != nil {
-                print("Authorisation has been failed")
+                let errorAlert = UIAlertController(title: "Authorization failed", message: "Wrong Email or Password.\nPlease check it and try again.", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+                self.loginButton.loadingIndicatorSwitcher(isShow: false)
+                print("Authorization failed")
                 return
             }
+            self.loginButton.loadingIndicatorSwitcher(isShow: false)
             self.performSegue(withIdentifier: "goToChatList", sender: nil)
             print("Successfully logged in")
-            
         }
     }
 }

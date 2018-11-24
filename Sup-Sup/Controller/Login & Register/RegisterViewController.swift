@@ -49,6 +49,9 @@ class RegisterViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var registerButton: PrimaryButton!
+    
+    
     @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,9 +96,14 @@ class RegisterViewController: UIViewController {
     
     @IBAction func registerButtonPressed(_ sender: PrimaryButton) {
         guard let email = loginTextField.text, let _ = passwordTextField.text, let name = nameTextField.text else {print("Email or password is invalid"); return}
+        registerButton.loadingIndicatorSwitcher(isShow: true)
         Auth.auth().createUser(withEmail: loginTextField.text!, password: passwordTextField.text!) { (user, error) in
             if error != nil {
                 print(error!)
+                let errorAlert = UIAlertController(title: "Registration failed", message: "Required fields are blank.\nPlease fill it and try again.", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+                self.registerButton.loadingIndicatorSwitcher(isShow: false)
                 return
             }
             
@@ -111,11 +119,13 @@ class RegisterViewController: UIViewController {
                     storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                         if error != nil {
                             print(error!)
+                            self.registerButton.loadingIndicatorSwitcher(isShow: false)
                             return
                         }
                         storageRef.downloadURL(completion: { (url, error) in
                             guard let downloadUrl = url?.absoluteString else {
                                 print(error!)
+                                self.registerButton.loadingIndicatorSwitcher(isShow: false)
                                 return
                             }
                             let values = [
@@ -144,9 +154,12 @@ class RegisterViewController: UIViewController {
         let usersReference = reference.child("users").child(uid)
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {
-                print("Registration has been failed")
+                
+                self.registerButton.loadingIndicatorSwitcher(isShow: false)
+                print("Registration failed")
                 return
             }
+            self.registerButton.loadingIndicatorSwitcher(isShow: false)
             self.performSegue(withIdentifier: "goToLoginAfterRegistration", sender: nil)
             print("Save user succsessfully")
         })

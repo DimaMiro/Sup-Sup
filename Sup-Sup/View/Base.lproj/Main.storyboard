@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -113,6 +112,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="wQW-B5-lyo"/>
                     <connections>
+                        <outlet property="loginButton" destination="vLl-3h-gY9" id="6gW-yD-dLJ"/>
                         <outlet property="loginTextField" destination="dF5-bh-vYv" id="aWw-DM-L8d"/>
                         <outlet property="passwordTextField" destination="ri9-nz-90g" id="agx-eq-QXV"/>
                         <outlet property="topImageHeightConstraint" destination="U0k-uO-K3e" id="U68-sx-hcr"/>
@@ -288,6 +288,7 @@
                         <outlet property="nameTextField" destination="CHT-qa-r8y" id="7Du-zE-lLk"/>
                         <outlet property="passwordTextField" destination="rzY-F6-O7e" id="jf1-Fr-DcA"/>
                         <outlet property="profileImageView" destination="toj-ld-hQT" id="ofc-i6-Zvx"/>
+                        <outlet property="registerButton" destination="cRO-Xf-IBo" id="X2b-bH-cIG"/>
                         <outlet property="scrollView" destination="zTQ-aO-vky" id="bYP-BO-cYY"/>
                         <segue destination="gzr-fT-FXw" kind="show" identifier="goToLoginAfterRegistration" id="IkG-Sd-XP3"/>
                     </connections>
