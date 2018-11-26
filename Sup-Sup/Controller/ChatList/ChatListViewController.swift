@@ -63,24 +63,26 @@ class ChatListViewController: UITableViewController {
         leftBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
         leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogOut)))
         
-        let currentUserID = Auth.auth().currentUser?.uid
-        Database.database().reference().child("users").child(currentUserID!).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-
-            if let userProfileImageURL = snapshot.value as? String {
-                let url = URL(string: userProfileImageURL)
-                URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                    if error != nil {
-                        print(error!)
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        if let dowloadedImage = UIImage(data: data!) {
-                            self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+        if let currentUserID = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("users").child(currentUserID).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let userProfileImageURL = snapshot.value as? String {
+                    let url = URL(string: userProfileImageURL)
+                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                        if error != nil {
+                            print(error!)
+                            return
                         }
-                    }
-                }.resume()
-            }
-        }, withCancel: nil)
+                        DispatchQueue.main.async {
+                            if let dowloadedImage = UIImage(data: data!) {
+                                self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+                            }
+                        }
+                        }.resume()
+                }
+            }, withCancel: nil)
+        }
+        
         navigationItem.leftBarButtonItem = leftBarButton
     }
     

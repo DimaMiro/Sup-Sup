@@ -221,8 +221,11 @@ class ChatViewController: UIViewController {
     
     // MARK: - Send message method group
     @objc private func handleSendAction() {
-        let textProperty = ["text": inputTextField.text!]
-        sendMessage(withProperties: textProperty)
+        if inputTextField.text != "" {
+            let textProperty = ["text": inputTextField.text!]
+            inputTextField.text = nil
+            sendMessage(withProperties: textProperty)
+        }
     }
     
     func sendMessageImage(withUrl imageUrl: String, ofImage image: UIImage) {
@@ -245,8 +248,6 @@ class ChatViewController: UIViewController {
                 print(error!)
                 return
             }
-            
-            self.inputTextField.text = nil
             
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
             let messageID = childRef.key
