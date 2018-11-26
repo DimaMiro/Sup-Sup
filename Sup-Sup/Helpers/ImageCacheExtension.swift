@@ -33,6 +33,6 @@ extension UIImageView {
                     self.image = dowloadedImage
                 }
             }
-            }.resume()
+        }.resume()
     }
 }

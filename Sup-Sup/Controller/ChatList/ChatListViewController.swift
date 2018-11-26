@@ -14,7 +14,15 @@ class ChatListViewController: UITableViewController {
     let cellID = "cellID"
     var messages = [ChatMessage]()
     var messagesDictionary = [String : ChatMessage]()
-
+    
+    let currentUserProfileImage : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "profilePicPlaceholder"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.imageView?.layer.cornerRadius = 18
+        return button
+    } ()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,10 +52,36 @@ class ChatListViewController: UITableViewController {
     }
     
     fileprivate func setupNavbar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(handleLogOut))
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let leftBarButton = UIBarButtonItem(customView: currentUserProfileImage)
+
+        leftBarButton.customView?.translatesAutoresizingMaskIntoConstraints = false
+        leftBarButton.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        leftBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogOut)))
+        
+        let currentUserID = Auth.auth().currentUser?.uid
+        Database.database().reference().child("users").child(currentUserID!).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+
+            if let userProfileImageURL = snapshot.value as? String {
+                let url = URL(string: userProfileImageURL)
+                URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        if let dowloadedImage = UIImage(data: data!) {
+                            self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+                        }
+                    }
+                }.resume()
+            }
+        }, withCancel: nil)
+        navigationItem.leftBarButtonItem = leftBarButton
     }
     
     

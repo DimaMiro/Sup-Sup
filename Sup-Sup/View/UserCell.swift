@@ -15,12 +15,16 @@ class UserCell: UITableViewCell {
         didSet {
             setupNameAndAvatar()
             
-            self.detailTextLabel?.text = message?.text
+            if let messageText = message?.text {
+                self.detailTextLabel?.text = messageText
+            } else {
+                self.detailTextLabel?.text = "Image"
+            }
             
             if let seconds = message?.timestamp{
                 let timeStampDate = NSDate(timeIntervalSince1970: Double(seconds))
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "hh:mm:ss a"
+                dateFormatter.dateFormat = "hh:mm a"
                 timeLabel.text = dateFormatter.string(from: timeStampDate as Date)
             }
         }

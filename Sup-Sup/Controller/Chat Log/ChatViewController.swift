@@ -104,7 +104,6 @@ class ChatViewController: UIViewController {
             let profileImageFromUrl = UIImageView()
             profileImageFromUrl.loadImageUsingCache(withUrlString: userProfileImageURL)
             chatPartnerProfileImage.setImage(profileImageFromUrl.image, for: .normal)
-            
         }
         self.navigationItem.rightBarButtonItem = rightBarButton
         
