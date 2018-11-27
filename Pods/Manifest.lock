@@ -68,12 +68,14 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - SimpleImageViewer (1.1.1)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - SimpleImageViewer (~> 1.1.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -90,6 +92,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - SimpleImageViewer
 
 SPEC CHECKSUMS:
   Firebase: 75ea9e232eefa158c1049028030b8f661a2ccb62
@@ -105,7 +108,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
 
-PODFILE CHECKSUM: e5d7cc2fb0a235942eaf034f23fe21dfbae2a366
+PODFILE CHECKSUM: 7452ca7bb456ca5841696ea1e1a99ce9cf2810b2
 
 COCOAPODS: 1.5.3

@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SimpleImageViewer
 
 class ChatViewController: UIViewController {
     
@@ -282,46 +283,12 @@ class ChatViewController: UIViewController {
     }
     
     // MARK: - Zoom functionality
-    var startingFrame: CGRect?
-    var blackBackground: UIView?
-    
-    func performZoomIn(forImageView startingImage: UIImageView) {
-        startingFrame = startingImage.superview?.convert(startingImage.frame, to: nil)
-        let zoomInImage = UIImageView(frame: startingFrame!)
-        zoomInImage.image = startingImage.image
-        zoomInImage.isUserInteractionEnabled = true
-        zoomInImage.alpha = 0
-        zoomInImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))
-        
-        if let keyWindow = UIApplication.shared.keyWindow{
-            blackBackground = UIView(frame: keyWindow.frame)
-            blackBackground?.backgroundColor = .black
-            blackBackground?.alpha = 0
-            
-            keyWindow.addSubview(blackBackground!)
-            keyWindow.addSubview(zoomInImage)
-            
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                self.blackBackground?.alpha = 1
-                zoomInImage.alpha = 1
-                let height = self.startingFrame!.height / self.startingFrame!.width * keyWindow.frame.width
-                zoomInImage.frame = CGRect(x: 0, y: 0, width: keyWindow.frame.width, height: height)
-                zoomInImage.center = keyWindow.center
-            }, completion: nil)
+    func performZoomIn(forImageView image: UIImageView) {
+        let imageViewerConfiguration = ImageViewerConfiguration { config in
+            config.imageView = image
         }
-    }
-    
-    @objc func handleZoomOut(gesture: UITapGestureRecognizer) {
-        if let zoomOutImage = gesture.view {
-            
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-                zoomOutImage.frame = self.startingFrame!
-                zoomOutImage.alpha = 0
-                self.blackBackground?.alpha = 0
-            }) { (completed: Bool) in
-                zoomOutImage.removeFromSuperview()
-            }
-        }
+        let imageViewerController = ImageViewerController(configuration: imageViewerConfiguration)
+        present(imageViewerController, animated: true)
     }
 }
 

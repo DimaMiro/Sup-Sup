@@ -10,5 +10,7 @@ target 'Sup-Sup' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'Firebase/Storage'
+    
+    pod 'SimpleImageViewer', '~> 1.1.1'
 
 end
