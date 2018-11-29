@@ -15,6 +15,9 @@ class ChatListViewController: UITableViewController {
     var messages = [ChatMessage]()
     var messagesDictionary = [String : ChatMessage]()
     
+    var currentUserName : String?
+    var currentUserEmail : String?
+    
     let currentUserProfileImage : UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "profilePicPlaceholder"), for: .normal)
@@ -63,22 +66,49 @@ class ChatListViewController: UITableViewController {
         leftBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
         leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userActionSheet)))
         
+//        if let currentUserID = Auth.auth().currentUser?.uid {
+//            Database.database().reference().child("users").child(currentUserID).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
+//
+//                if let userProfileImageURL = snapshot.value as? String {
+//                    let url = URL(string: userProfileImageURL)
+//                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
+//                        if error != nil {
+//                            print(error!)
+//                            return
+//                        }
+//                        DispatchQueue.main.async {
+//                            if let dowloadedImage = UIImage(data: data!) {
+//                                self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+//                            }
+//                        }
+//                        }.resume()
+//                }
+//            }, withCancel: nil)
+//        }
         if let currentUserID = Auth.auth().currentUser?.uid {
-            Database.database().reference().child("users").child(currentUserID).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                if let userProfileImageURL = snapshot.value as? String {
-                    let url = URL(string: userProfileImageURL)
-                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
-                        if error != nil {
-                            print(error!)
-                            return
-                        }
-                        DispatchQueue.main.async {
-                            if let dowloadedImage = UIImage(data: data!) {
-                                self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+            Database.database().reference().child("users").child(currentUserID).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let userInfo = snapshot.value as? [String : AnyObject] {
+                    let name = userInfo["name"]
+                    self.currentUserName = name as? String
+                    let email = userInfo["email"]
+                    self.currentUserEmail = email as? String
+                    
+                    if let userProfileImageURL = userInfo["profileImageUrl"] {
+                        let url = URL(string: userProfileImageURL as! String)
+                        URLSession.shared.dataTask(with: url!) { (data, response, error) in
+                            if error != nil {
+                                print(error!)
+                                return
                             }
-                        }
-                        }.resume()
+                            DispatchQueue.main.async {
+                                if let dowloadedImage = UIImage(data: data!) {
+                                    self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
+                                }
+                            }
+                            }.resume()
+                    }
+
+                    
                 }
             }, withCancel: nil)
         }
@@ -91,7 +121,7 @@ class ChatListViewController: UITableViewController {
     @objc func userActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
-            
+            self.performSegueToSettings()
         }
         let logutAction = UIAlertAction(title: "Logout", style: .destructive) { (_) in
             self.handleLogOut()
@@ -103,6 +133,17 @@ class ChatListViewController: UITableViewController {
         actionSheet.addAction(logutAction)
         actionSheet.addAction(cancelAction)
         present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func performSegueToSettings() {
+        let storyboard = UIStoryboard(name: "Profiles", bundle: nil)
+        let settingsVC = storyboard.instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
+        settingsVC.userName = currentUserName
+        settingsVC.userEmail = currentUserEmail
+        settingsVC.userProfileImage = currentUserProfileImage.imageView
+        
+        self.navigationController?.pushViewController(settingsVC, animated: true)
+        
     }
     
     @objc func handleLogOut() {

@@ -325,6 +325,7 @@
         <image name="topImage" width="375" height="270"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="yjA-UY-uDb"/>
         <segue reference="IkG-Sd-XP3"/>
     </inferredMetricsTieBreakers>
 </document>
