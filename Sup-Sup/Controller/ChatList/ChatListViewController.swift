@@ -61,7 +61,7 @@ class ChatListViewController: UITableViewController {
         leftBarButton.customView?.translatesAutoresizingMaskIntoConstraints = false
         leftBarButton.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
         leftBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
-        leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLogOut)))
+        leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userActionSheet)))
         
         if let currentUserID = Auth.auth().currentUser?.uid {
             Database.database().reference().child("users").child(currentUserID).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -88,6 +88,23 @@ class ChatListViewController: UITableViewController {
     
     
     //MARK: - Handlers
+    @objc func userActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) in
+            
+        }
+        let logutAction = UIAlertAction(title: "Logout", style: .destructive) { (_) in
+            self.handleLogOut()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            actionSheet.dismiss(animated: true, completion: nil)
+        }
+        actionSheet.addAction(settingsAction)
+        actionSheet.addAction(logutAction)
+        actionSheet.addAction(cancelAction)
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
     @objc func handleLogOut() {
         do {
             try Auth.auth().signOut()
