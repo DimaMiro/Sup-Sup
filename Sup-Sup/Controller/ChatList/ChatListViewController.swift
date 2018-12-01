@@ -65,26 +65,7 @@ class ChatListViewController: UITableViewController {
         leftBarButton.customView?.widthAnchor.constraint(equalToConstant: 36).isActive = true
         leftBarButton.customView?.heightAnchor.constraint(equalToConstant: 36).isActive = true
         leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userActionSheet)))
-        
-//        if let currentUserID = Auth.auth().currentUser?.uid {
-//            Database.database().reference().child("users").child(currentUserID).child("profileImageUrl").observeSingleEvent(of: .value, with: { (snapshot) in
-//
-//                if let userProfileImageURL = snapshot.value as? String {
-//                    let url = URL(string: userProfileImageURL)
-//                    URLSession.shared.dataTask(with: url!) { (data, response, error) in
-//                        if error != nil {
-//                            print(error!)
-//                            return
-//                        }
-//                        DispatchQueue.main.async {
-//                            if let dowloadedImage = UIImage(data: data!) {
-//                                self.currentUserProfileImage.setImage(dowloadedImage, for: .normal)
-//                            }
-//                        }
-//                        }.resume()
-//                }
-//            }, withCancel: nil)
-//        }
+
         if let currentUserID = Auth.auth().currentUser?.uid {
             Database.database().reference().child("users").child(currentUserID).observeSingleEvent(of: .value, with: { (snapshot) in
                 if let userInfo = snapshot.value as? [String : AnyObject] {

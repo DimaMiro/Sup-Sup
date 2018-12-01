@@ -30,10 +30,14 @@ class SettingsViewController: UITableViewController {
         if let image = userProfileImage?.image {
             profileImage.image = image
         }
-        
-        self.tableView.tableFooterView = UIView()
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToEdit" {
+            let editVC = segue.destination as! EditProfileViewController
+            editVC.userName = userName
+            editVC.userProfileImage = userProfileImage
+        }
+    }
     
     
 }
