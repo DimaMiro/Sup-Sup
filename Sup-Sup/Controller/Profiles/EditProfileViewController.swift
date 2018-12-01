@@ -43,15 +43,19 @@ class EditProfileViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavbar()
-        nameTextField.text = userName
-        if let image = userProfileImage?.image {
-            profileImage.image = image
-        }
+        setupUserInfo()
         
     }
     
     func setupNavbar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
+    }
+    
+    func setupUserInfo() {
+        nameTextField.text = userName
+        if let image = userProfileImage?.image {
+            profileImage.image = image
+        }
     }
     
     @objc func handleSave() {

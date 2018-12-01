@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsViewController: UITableViewController {
     
@@ -37,6 +38,27 @@ class SettingsViewController: UITableViewController {
             editVC.userName = userName
             editVC.userProfileImage = userProfileImage
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.section)
+        print(indexPath.row)
+        
+        if indexPath.section == 2 && indexPath.row == 0 {
+            handleLogOut()
+        }
+    }
+    
+    func handleLogOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewController(withIdentifier: "loginVC") as! LoginNavigationController
+        present(loginVC, animated: true, completion: nil)
     }
     
     
