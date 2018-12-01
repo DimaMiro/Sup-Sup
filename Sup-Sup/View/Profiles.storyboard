@@ -191,7 +191,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
-                            <tableViewSection headerTitle=" " footerTitle=" " id="zda-f8-O9X">
+                            <tableViewSection headerTitle=" " id="zda-f8-O9X">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="70" id="R7Y-1c-i88">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
@@ -226,6 +226,32 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle=" " footerTitle=" " id="Gy8-HA-ox6">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Dtb-cR-V9a">
+                                        <rect key="frame" x="0.0" y="126" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dtb-cR-V9a" id="dYt-JC-VNG">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" textAlignment="natural" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oN0-GD-sMe">
+                                                    <rect key="frame" x="16" y="5" width="343" height="34"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="oN0-GD-sMe" secondAttribute="trailing" constant="16" id="I7S-Cb-5hf"/>
+                                                <constraint firstAttribute="bottom" secondItem="oN0-GD-sMe" secondAttribute="bottom" constant="4.5" id="K7R-y7-Tog"/>
+                                                <constraint firstItem="oN0-GD-sMe" firstAttribute="top" secondItem="dYt-JC-VNG" secondAttribute="top" constant="5" id="i5P-qy-10D"/>
+                                                <constraint firstItem="oN0-GD-sMe" firstAttribute="leading" secondItem="dYt-JC-VNG" secondAttribute="leading" constant="16" id="uiZ-Ho-Bb4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Nkp-V4-tuJ" id="Ae2-va-U3F"/>
@@ -233,6 +259,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="emailTextField" destination="oN0-GD-sMe" id="LgE-nd-V7y"/>
                         <outlet property="nameTextField" destination="RRo-XX-Wsj" id="A7R-V9-4rD"/>
                         <outlet property="profileImage" destination="bjt-bh-kHq" id="Mvq-f1-Lhs"/>
                     </connections>

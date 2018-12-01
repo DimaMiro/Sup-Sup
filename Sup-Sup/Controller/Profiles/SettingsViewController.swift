@@ -36,14 +36,13 @@ class SettingsViewController: UITableViewController {
         if segue.identifier == "goToEdit" {
             let editVC = segue.destination as! EditProfileViewController
             editVC.userName = userName
+            editVC.userEmail = userEmail
             editVC.userProfileImage = userProfileImage
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.section)
-        print(indexPath.row)
-        
+
         if indexPath.section == 2 && indexPath.row == 0 {
             handleLogOut()
         }
