@@ -35,14 +35,12 @@ class EditProfileViewController: UITableViewController {
             blackBackground.widthAnchor.constraint(equalToConstant: 60).isActive = true
             blackBackground.heightAnchor.constraint(equalToConstant: 60).isActive = true
             
-            
             let changeImageIcon = UIImageView()
             profileImage.addSubview(changeImageIcon)
             changeImageIcon.translatesAutoresizingMaskIntoConstraints = false
             changeImageIcon.image = UIImage(named: "changeImageIcon")
             changeImageIcon.centerXAnchor.constraint(equalTo: profileImage.centerXAnchor).isActive = true
             changeImageIcon.centerYAnchor.constraint(equalTo: profileImage.centerYAnchor).isActive = true
-            
         }
     }
     @IBOutlet weak var nameTextField: UITextField!

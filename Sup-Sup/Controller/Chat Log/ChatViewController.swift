@@ -252,10 +252,10 @@ class ChatViewController: UIViewController {
             
             let userMessagesRef = Database.database().reference().child("user-messages").child(fromID).child(toID)
             let messageID = childRef.key
-            userMessagesRef.updateChildValues([messageID : 1])
+            userMessagesRef.updateChildValues([messageID : timestamp])
             
             let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toID).child(fromID)
-            recipientUserMessagesRef.updateChildValues([messageID : 1])
+            recipientUserMessagesRef.updateChildValues([messageID : timestamp])
         }
     }
     
