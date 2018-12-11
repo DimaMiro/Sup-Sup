@@ -15,7 +15,6 @@ class ChatViewController: UIViewController {
     var user : User? {
         didSet{
             navigationItem.title = user?.name
-            observeMessages()
         }
     }
 
@@ -187,6 +186,7 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.register(ChatMessageCell.self, forCellReuseIdentifier: cellId)
+        observeMessages()
     }
     
     private func setupKeyboardObservers() {
@@ -199,24 +199,24 @@ class ChatViewController: UIViewController {
         guard let uid = Auth.auth().currentUser?.uid, let toID = user?.id else {return}
         let userMessagesRef = Database.database().reference().child("user-messages").child(uid).child(toID)
         userMessagesRef.observe(.childAdded, with: { (snapshot) in
-            print(snapshot)
             let messageID = snapshot.key
             let messagesRef = Database.database().reference().child("messages").child(messageID)
+            
+            
             messagesRef.observeSingleEvent(of: .value, with: { (snapshot) in
-                print(snapshot)
-                
                 guard let dictionary = snapshot.value as? [String : AnyObject] else {return}
                 let message = ChatMessage(dictionary: dictionary)
-                
+
                 self.messagesArray.append(message)
+                self.messagesArray.sort(by: {$0.timestamp! < $1.timestamp!})
                 DispatchQueue.main.async {
+                    
                     self.tableView.reloadData()
                     let indexPath : IndexPath = IndexPath(row: self.messagesArray.count - 1, section: 0)
                     self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
                 }
-                
+
             }, withCancel: nil)
-            
         }, withCancel: nil)
     }
     
@@ -239,7 +239,7 @@ class ChatViewController: UIViewController {
         let childRef = ref.childByAutoId()
         let toID = user!.id!
         let fromID = Auth.auth().currentUser!.uid
-        let timestamp = Int(NSDate().timeIntervalSince1970)
+        let timestamp = ServerValue.timestamp()
         var values = ["fromID": fromID, "toID": toID, "timestamp": timestamp] as [String : Any]
         //Append values dictionary with property dictionary
         //key $0, value $1
@@ -382,7 +382,6 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatMessageCell
         cell.chatViewController = self
-
         let chatMessage = messagesArray[indexPath.row]
 
         cell.chatMessage = chatMessage

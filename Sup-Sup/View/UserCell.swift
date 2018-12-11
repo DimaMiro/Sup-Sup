@@ -22,7 +22,7 @@ class UserCell: UITableViewCell {
             }
             
             if let seconds = message?.timestamp{
-                let timeStampDate = NSDate(timeIntervalSince1970: Double(seconds))
+                let timeStampDate = NSDate(timeIntervalSince1970: Double(seconds) / 1000) 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "hh:mm a"
                 timeLabel.text = dateFormatter.string(from: timeStampDate as Date)

@@ -156,29 +156,67 @@ class ChatListViewController: UITableViewController {
     func observeUserMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let ref = Database.database().reference().child("user-messages").child(uid)
+//        ref.observe(.childAdded, with: { (snapshot) in
+//            let userId = snapshot.key
+//            print(userId)
+//            Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
+//                let messageID = snapshot.key
+//                self.fetchMessage(withMessageId: messageID)
+//                print(messageID)
+//            }, withCancel: nil)
+//
+//        }, withCancel: nil)
+        
+        
         ref.observe(.childAdded, with: { (snapshot) in
             let userId = snapshot.key
-            Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
+            print(userId)
+            ref.child(userId).queryOrdered(byChild: uid).queryLimited(toLast: 1).observe(.childAdded, with: { (snapshot) in
+                print("Snap: \(snapshot)")
                 let messageID = snapshot.key
                 self.fetchMessage(withMessageId: messageID)
             }, withCancel: nil)
         }, withCancel: nil)
+        
+        
     }
     
+//    private func fetchMessage(withMessageId messageID : String) {
+//        let messageReference = Database.database().reference().child("messages").child(messageID)
+//        messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
+//            if let dictionary = snapshot.value as? [String : Any] {
+//                let message = ChatMessage(dictionary: dictionary)
+//
+//                if let chatPartnerID = message.chatPartnerID() {
+//                    self.messagesDictionary[chatPartnerID] = message
+//                    print(self.messagesDictionary)
+//                }
+//                self.attamptReloadingOfTable()
+//            }
+//        }, withCancel: nil)
+//        messageReference.observe(.childRemoved, with: { (snapshot) in
+//            self.messagesDictionary.removeValue(forKey: snapshot.key)
+//            self.attamptReloadingOfTable()
+//        }, withCancel: nil)
+//    }
     private func fetchMessage(withMessageId messageID : String) {
         let messageReference = Database.database().reference().child("messages").child(messageID)
         messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String : Any] {
                 let message = ChatMessage(dictionary: dictionary)
-                
+
                 if let chatPartnerID = message.chatPartnerID() {
                     self.messagesDictionary[chatPartnerID] = message
+                    print(self.messagesDictionary)
                 }
+//                self.handleReloadTable()
                 self.attamptReloadingOfTable()
             }
+//            print(snapshot)
         }, withCancel: nil)
         messageReference.observe(.childRemoved, with: { (snapshot) in
             self.messagesDictionary.removeValue(forKey: snapshot.key)
+//            self.handleReloadTable()
             self.attamptReloadingOfTable()
         }, withCancel: nil)
     }
@@ -223,7 +261,8 @@ class ChatListViewController: UITableViewController {
                     return
                 }
                 self.messagesDictionary.removeValue(forKey: chatPartnerId)
-                self.attamptReloadingOfTable()
+//                self.attamptReloadingOfTable()
+                self.handleReloadTable()
             }
         }
     }
