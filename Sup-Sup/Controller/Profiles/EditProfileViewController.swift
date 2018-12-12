@@ -51,8 +51,8 @@ class EditProfileViewController: UITableViewController {
         setupNavbar()
         setupUserInfo()
         
-        nameTextField.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingDidEnd)
-        emailTextField.addTarget(self, action: #selector(emailDidChange(_:)), for: .editingDidEnd)
+        nameTextField.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
+        emailTextField.addTarget(self, action: #selector(emailDidChange(_:)), for: .editingChanged)
     }
     
     @objc func nameDidChange(_ textField : UITextField) {
@@ -91,7 +91,8 @@ class EditProfileViewController: UITableViewController {
     
     @objc func handleSave() {
         navigationController?.popViewController(animated: true)
-        if profileImageDidChange || nameDidChange || emailDidChange {
+
+        if profileImageDidChange {
             print("Profile image has changed")
             let imageName = NSUUID().uuidString
             let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
@@ -113,9 +114,15 @@ class EditProfileViewController: UITableViewController {
                             ] as [String : AnyObject]
                         self.updateUserInfo(withUid: self.uid!, andValues: values as [String : AnyObject])
                     })
-                    
+
                 })
             }
+        } else {
+            let values = [
+                "name" : self.userName,
+                "email" : self.userEmail
+                ] as [String : AnyObject]
+            self.updateUserInfo(withUid: self.uid!, andValues: values as [String : AnyObject])
         }
     }
     
@@ -124,10 +131,10 @@ class EditProfileViewController: UITableViewController {
         let usersReference = reference.child("users").child(uid)
         usersReference.updateChildValues(values, withCompletionBlock: { (err, ref) in
             if err != nil {
-                print("Registration failed")
+                print("Updating user info failed")
                 return
             }
-            print("Save user succsessfully")
+            print("Update user info succsessfully")
         })
     }
     
