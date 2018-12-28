@@ -185,7 +185,7 @@
         <!--Edit-->
         <scene sceneID="mhR-Mn-dcs">
             <objects>
-                <tableViewController title="Edit" id="Nkp-V4-tuJ" customClass="EditProfileViewController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Edit" id="Nkp-V4-tuJ" customClass="EditProfileController" customModule="Sup_Sup" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="DRm-az-LOU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -226,32 +226,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle=" " footerTitle=" " id="Gy8-HA-ox6">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Dtb-cR-V9a">
-                                        <rect key="frame" x="0.0" y="126" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Dtb-cR-V9a" id="dYt-JC-VNG">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" textAlignment="natural" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oN0-GD-sMe">
-                                                    <rect key="frame" x="16" y="5" width="343" height="34"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="oN0-GD-sMe" secondAttribute="trailing" constant="16" id="I7S-Cb-5hf"/>
-                                                <constraint firstAttribute="bottom" secondItem="oN0-GD-sMe" secondAttribute="bottom" constant="4.5" id="K7R-y7-Tog"/>
-                                                <constraint firstItem="oN0-GD-sMe" firstAttribute="top" secondItem="dYt-JC-VNG" secondAttribute="top" constant="5" id="i5P-qy-10D"/>
-                                                <constraint firstItem="oN0-GD-sMe" firstAttribute="leading" secondItem="dYt-JC-VNG" secondAttribute="leading" constant="16" id="uiZ-Ho-Bb4"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Nkp-V4-tuJ" id="Ae2-va-U3F"/>
@@ -259,7 +233,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="emailTextField" destination="oN0-GD-sMe" id="LgE-nd-V7y"/>
                         <outlet property="nameTextField" destination="RRo-XX-Wsj" id="A7R-V9-4rD"/>
                         <outlet property="profileImage" destination="bjt-bh-kHq" id="Mvq-f1-Lhs"/>
                     </connections>

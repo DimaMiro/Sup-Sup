@@ -24,7 +24,7 @@
 		D9A9425121B05D4700276E04 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9425021B05D4700276E04 /* SettingsViewController.swift */; };
 		D9A9425321B05D8000276E04 /* PartnerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9425221B05D8000276E04 /* PartnerProfileViewController.swift */; };
 		D9A9425521B061AA00276E04 /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9A9425421B061AA00276E04 /* Profiles.storyboard */; };
-		D9A9425721B1B0D300276E04 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9425621B1B0D200276E04 /* EditProfileViewController.swift */; };
+		D9A9425721B1B0D300276E04 /* EditProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A9425621B1B0D200276E04 /* EditProfileController.swift */; };
 		D9ADEFE82175391500EF2E2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE72175391500EF2E2D /* AppDelegate.swift */; };
 		D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9ADEFE92175391500EF2E2D /* ChatViewController.swift */; };
 		D9ADEFED2175391500EF2E2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9ADEFEB2175391500EF2E2D /* Main.storyboard */; };
@@ -54,7 +54,7 @@
 		D9A9425021B05D4700276E04 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9A9425221B05D8000276E04 /* PartnerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerProfileViewController.swift; sourceTree = "<group>"; };
 		D9A9425421B061AA00276E04 /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
-		D9A9425621B1B0D200276E04 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		D9A9425621B1B0D200276E04 /* EditProfileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileController.swift; sourceTree = "<group>"; };
 		D9ADEFE42175391500EF2E2D /* Sup-Sup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sup-Sup.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9ADEFE72175391500EF2E2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9ADEFE92175391500EF2E2D /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				D9A9425021B05D4700276E04 /* SettingsViewController.swift */,
-				D9A9425621B1B0D200276E04 /* EditProfileViewController.swift */,
+				D9A9425621B1B0D200276E04 /* EditProfileController.swift */,
 				D9A9425221B05D8000276E04 /* PartnerProfileViewController.swift */,
 			);
 			path = Profiles;
@@ -346,7 +346,7 @@
 				D93D193F2189978800B8959A /* DateHeaderLabel.swift in Sources */,
 				D93D1955218CEEBD00B8959A /* ChatListViewController.swift in Sources */,
 				D93D195C218DEB5100B8959A /* UserCell.swift in Sources */,
-				D9A9425721B1B0D300276E04 /* EditProfileViewController.swift in Sources */,
+				D9A9425721B1B0D300276E04 /* EditProfileController.swift in Sources */,
 				D923509021A46FC00087BF26 /* LoginNavigationController.swift in Sources */,
 				D93D1951218C364800B8959A /* CustomTextField.swift in Sources */,
 				D9ADEFEA2175391500EF2E2D /* ChatViewController.swift in Sources */,
@@ -515,7 +515,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DimaMiro.Sup-Sup";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -535,7 +535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.DimaMiro.Sup-Sup";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

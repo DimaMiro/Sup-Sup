@@ -9,12 +9,18 @@
 import UIKit
 import Firebase
 
-class EditProfileViewController: UITableViewController {
+protocol EditProfileControllerDelegate {
+    func nameChanged(to name: String?)
+    func profileImageChanged(to imageView: UIImageView?)
+}
+
+class EditProfileController: UITableViewController {
     
     let uid = Auth.auth().currentUser?.uid
     
+    var delegate: EditProfileControllerDelegate?
+    
     var userName : String?
-    var userEmail : String?
     var userProfileImage : UIImageView?
     
     var profileImageDidChange : Bool = false
@@ -44,7 +50,6 @@ class EditProfileViewController: UITableViewController {
         }
     }
     @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +57,6 @@ class EditProfileViewController: UITableViewController {
         setupUserInfo()
         
         nameTextField.addTarget(self, action: #selector(nameDidChange(_:)), for: .editingChanged)
-        emailTextField.addTarget(self, action: #selector(emailDidChange(_:)), for: .editingChanged)
     }
     
     @objc func nameDidChange(_ textField : UITextField) {
@@ -61,21 +65,7 @@ class EditProfileViewController: UITableViewController {
         print("Name did change")
     }
     
-    @objc func emailDidChange(_ textField : UITextField) {
-        let requieredCharacters : Set<Character> = ["@", "."]
-        guard let editedEmail = emailTextField.text else {
-            print("Empty textfield")
-            return}
-        if requieredCharacters.isSubset(of: editedEmail) {
-            userEmail = editedEmail
-            emailDidChange = true
-            print("Email did change")
-        } else {
-            let errorAlert = UIAlertController(title: "Wrong Email", message: "Email must contain domain.\nFor example : @example.com.\nPlease check it and try again.", preferredStyle: .alert)
-            errorAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-            self.present(errorAlert, animated: true, completion: nil)
-        }
-    }
+    
     
     func setupNavbar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(handleSave))
@@ -83,17 +73,15 @@ class EditProfileViewController: UITableViewController {
     
     func setupUserInfo() {
         nameTextField.text = userName
-        emailTextField.text = userEmail
         if let image = userProfileImage?.image {
             profileImage.image = image
         }
     }
     
+    
     @objc func handleSave() {
-        navigationController?.popViewController(animated: true)
-
         if profileImageDidChange {
-            print("Profile image has changed")
+            
             let imageName = NSUUID().uuidString
             let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
             if let profileImage = self.userProfileImage?.image, let uploadData = profileImage.jpegData(compressionQuality: 0.1) {
@@ -109,23 +97,27 @@ class EditProfileViewController: UITableViewController {
                         }
                         let values = [
                             "name" : self.userName,
-                            "email" : self.userEmail,
                             "profileImageUrl" : downloadUrl
                             ] as [String : AnyObject]
                         self.updateUserInfo(withUid: self.uid!, andValues: values as [String : AnyObject])
                     })
-
                 })
             }
-        } else {
+            print("Profile image has changed")
+            delegate!.nameChanged(to: self.userName)
+            delegate!.profileImageChanged(to: self.userProfileImage)
+        } else if nameDidChange {
             let values = [
                 "name" : self.userName,
-                "email" : self.userEmail
                 ] as [String : AnyObject]
             self.updateUserInfo(withUid: self.uid!, andValues: values as [String : AnyObject])
+            print("Name has changed to \(userName!)")
+            delegate!.nameChanged(to: self.userName)
+        } else {
+            print("Do nothing with userName: \(userName!)")
         }
+        navigationController?.popViewController(animated: true)
     }
-    
     private func updateUserInfo(withUid uid: String, andValues values : [String : AnyObject]) {
         let reference = Database.database().reference()
         let usersReference = reference.child("users").child(uid)
@@ -140,7 +132,7 @@ class EditProfileViewController: UITableViewController {
     
 }
 
-extension EditProfileViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension EditProfileController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @objc func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
         picker.delegate = self

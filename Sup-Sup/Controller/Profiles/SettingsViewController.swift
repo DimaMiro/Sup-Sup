@@ -9,7 +9,9 @@
 import UIKit
 import Firebase
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, EditProfileControllerDelegate {
+    
+    
     
     var userName : String?
     var userEmail : String?
@@ -32,11 +34,22 @@ class SettingsViewController: UITableViewController {
             profileImage.image = image
         }
     }
+//    Delegate Methods
+    func nameChanged(to name: String?) {
+        userName = name
+        nameLabel.text = name
+    }
+    
+    func profileImageChanged(to imageView: UIImageView?) {
+        userProfileImage = imageView
+        profileImage.image = imageView?.image
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToEdit" {
-            let editVC = segue.destination as! EditProfileViewController
+            let editVC = segue.destination as! EditProfileController
+            editVC.delegate = self
             editVC.userName = userName
-            editVC.userEmail = userEmail
             editVC.userProfileImage = userProfileImage
         }
     }
