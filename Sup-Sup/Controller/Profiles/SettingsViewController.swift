@@ -34,7 +34,7 @@ class SettingsViewController: UITableViewController, EditProfileControllerDelega
             profileImage.image = image
         }
     }
-//    Delegate Methods
+//    EditProfileControllerDelegate Methods
     func nameChanged(to name: String?) {
         userName = name
         nameLabel.text = name
