@@ -11,12 +11,29 @@ import Firebase
 
 class NewChatViewController: UITableViewController {
     
-    let cellID = "cellID"
-    var users = [User]()
+    fileprivate let cellID = "cellID"
+    private var users = [User]()
+    private var filteredUsers = [User]()
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    private var searchbarIsEmpty : Bool {
+        guard let text = searchController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    private var isFiltering : Bool {
+        if searchController.isActive && !searchbarIsEmpty {
+            return true
+        } else {
+            return false
+        }
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavbar()
+        setupSearchController()
         tableView.register(UserCell.self, forCellReuseIdentifier: cellID)
         self.tableView.tableFooterView = UIView()
         fetchUser()
@@ -24,7 +41,16 @@ class NewChatViewController: UITableViewController {
     
     fileprivate func setupNavbar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
+        navigationItem.searchController = searchController
         navigationController?.navigationBar.tintColor = UIColor.CustomColor.electricPurple
+    }
+    
+    fileprivate func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = UIColor.CustomColor.electricPurple
+        definesPresentationContext = true
     }
     
     fileprivate func fetchUser() {
@@ -49,11 +75,21 @@ class NewChatViewController: UITableViewController {
     
     //MARK: - TableView Methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        if isFiltering {
+            return filteredUsers.count
+        } else {
+            return users.count
+        }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! UserCell
-        let user = users[indexPath.row]
+        
+        var user: User
+        if isFiltering {
+            user = filteredUsers[indexPath.row]
+        } else {
+            user = users[indexPath.row]
+        }
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
         
@@ -71,10 +107,38 @@ class NewChatViewController: UITableViewController {
     var chatList : ChatListViewController?
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dismiss(animated: true) {
-            let user = self.users[indexPath.row]
-            self.chatList?.showChatLogController(forUser: user)
+        let user : User
+        if isFiltering {
+            user = filteredUsers[indexPath.row]
+            searchController.dismiss(animated: false)
+            dismiss(animated: true) {
+                self.chatList?.showChatLogController(forUser: user)
+            }
+        } else {
+            user = users[indexPath.row]
+            dismiss(animated: true) {
+                self.chatList?.showChatLogController(forUser: user)
+            }
         }
+        
+    }
+}
+
+extension NewChatViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        filterContent(forSearchText: searchText)
+    }
+    
+    private func filterContent(forSearchText searchText: String) {
+        filteredUsers = users.filter({ (user) -> Bool in
+            if let userName = user.name {
+                return userName.lowercased().contains(searchText.lowercased())
+            } else {
+                return false
+            }
+        })
+        tableView.reloadData()
     }
 }
 
